@@ -1,0 +1,66 @@
+.terminal {
+    height: 100%;
+    width: 100%;
+    color: #cdd6f4;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    overflow-y: auto;
+    background-color: rgba(30, 30, 46, 0.85);
+    /* More transparent */
+    backdrop-filter: blur(10px);
+    /* Blur effect */
+    padding: 10px;
+}
+
+.terminal-output {
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    text-shadow: 0 0 5px rgba(205, 214, 244, 0.3);
+    /* Subtle glow */
+}
+
+.command-line {
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    color: #a6e3a1;
+    /* Green */
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.prompt-path {
+    color: #89b4fa;
+    /* Blue */
+}
+
+.input-area {
+    background: transparent;
+    border: none;
+    color: #cdd6f4;
+    font-family: inherit;
+    font-size: 14px;
+    flex: 1;
+    outline: none;
+    text-shadow: 0 0 5px rgba(205, 214, 244, 0.3);
+}
+
+.ascii-art {
+    color: #cba6f7;
+    /* Mauve */
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(203, 166, 247, 0.5);
+    /* Stronger glow */
+}
+
+.command-success {
+    color: #a6e3a1;
+}
+
+.command-error {
+    color: #f38ba8;
+}

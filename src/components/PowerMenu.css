@@ -1,0 +1,74 @@
+.power-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.power-menu-title {
+    font-size: 32px;
+    color: var(--text-main);
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.power-options {
+    display: flex;
+    gap: 40px;
+}
+
+.power-btn {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    border: 2px solid var(--surface-1);
+    background: rgba(30, 30, 46, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.power-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--color-mauve);
+    background: var(--surface-0);
+}
+
+.power-btn svg {
+    width: 48px;
+    height: 48px;
+}
+
+.power-btn span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.power-btn.restart:hover {
+    color: var(--color-yellow);
+    border-color: var(--color-yellow);
+}
+
+.power-btn.shutdown:hover {
+    color: var(--color-red);
+    border-color: var(--color-red);
+}
+
+.power-btn.sleep:hover {
+    color: var(--color-blue);
+    border-color: var(--color-blue);
+}

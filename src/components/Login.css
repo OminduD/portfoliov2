@@ -1,0 +1,120 @@
+.login-screen {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: var(--text-main);
+}
+
+.login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 30, 46, 0.4);
+    /* Tint */
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+
+.login-container {
+    z-index: 2;
+    background: rgba(30, 30, 46, 0.8);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--surface-0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 320px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.user-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--surface-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: var(--text-sub);
+    border: 3px solid var(--color-mauve);
+    overflow: hidden;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.password-input {
+    background: var(--surface-0);
+    border: 1px solid var(--surface-1);
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: var(--text-main);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.password-input:focus {
+    border-color: var(--color-mauve);
+}
+
+.login-btn {
+    background: var(--color-mauve);
+    color: var(--bg-base);
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.login-btn:hover {
+    opacity: 0.9;
+}
+
+.sddm-controls {
+    z-index: 2;
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.sddm-btn {
+    background: rgba(49, 50, 68, 0.8);
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.sddm-btn:hover {
+    background: var(--color-mauve);
+    color: var(--bg-base);
+}

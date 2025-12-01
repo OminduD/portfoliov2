@@ -1,0 +1,62 @@
+:root {
+  /* Catppuccin Mocha Palette */
+  --bg-base: #1e1e2e;
+  --bg-mantle: #181825;
+  --bg-crust: #11111b;
+  
+  --text-main: #cdd6f4;
+  --text-sub: #a6adc8;
+  
+  --color-blue: #89b4fa;
+  --color-red: #f38ba8;
+  --color-green: #a6e3a1;
+  --color-yellow: #f9e2af;
+  --color-mauve: #cba6f7;
+  --color-peach: #fab387;
+  --color-lavender: #b4befe;
+  
+  --overlay-0: #6c7086;
+  --surface-0: #313244;
+  --surface-1: #45475a;
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  overflow: hidden; /* Prevent scrolling, it's a desktop */
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-mantle); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-1); 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--overlay-0); 
+}

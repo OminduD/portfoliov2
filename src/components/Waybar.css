@@ -1,0 +1,76 @@
+.waybar {
+    height: 36px;
+    background-color: rgba(30, 30, 46, 0.9);
+    /* Base with opacity */
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    margin: 8px 8px 0 8px;
+    border-radius: 8px;
+    border: 1px solid var(--surface-0);
+    z-index: 100;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
+.waybar-left,
+.waybar-center,
+.waybar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.workspace {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.workspace:hover {
+    background-color: var(--surface-1);
+}
+
+.workspace.active {
+    background-color: var(--color-mauve);
+    color: var(--bg-base);
+    font-weight: bold;
+}
+
+.module {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background-color: var(--surface-0);
+    border-radius: 16px;
+    font-size: 12px;
+}
+
+.module.clock {
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.module.cpu {
+    color: var(--color-red);
+}
+
+.module.ram {
+    color: var(--color-yellow);
+}
+
+.module.power {
+    background-color: var(--color-red);
+    color: var(--bg-base);
+    cursor: pointer;
+}

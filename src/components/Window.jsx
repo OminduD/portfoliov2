@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Minus, Square } from 'lucide-react';
 import './Window.css';
 
 const Window = ({ window, onClose, onMinimize, onMaximize }) => {
@@ -18,21 +17,48 @@ const Window = ({ window, onClose, onMinimize, onMaximize }) => {
                 top: y || '50%',
                 width: width || 800,
                 height: height || 600,
-                x: x ? 0 : '-50%', // Center if no x provided
-                y: y ? 0 : '-50%', // Center if no y provided
+                x: x ? 0 : '-50%',
+                y: y ? 0 : '-50%',
                 zIndex: zIndex,
             }}
             drag
             dragMomentum={false}
         >
             <div className="window-header">
+                {/* KDE Breeze: title on the left */}
                 <div className="window-title">
                     <span>{title}</span>
                 </div>
+                {/* KDE Breeze: controls on the right — minimize, maximize, close */}
                 <div className="window-controls">
-                    <button className="control-btn minimize" onClick={() => onMinimize(id)} />
-                    <button className="control-btn maximize" onClick={() => onMaximize(id)} />
-                    <button className="control-btn close" onClick={() => onClose(id)} />
+                    <button
+                        className="control-btn btn-minimize"
+                        onClick={() => onMinimize(id)}
+                        title="Minimize"
+                    >
+                        <svg width="10" height="10" viewBox="0 0 10 10">
+                            <rect x="1" y="7" width="8" height="1.5" fill="currentColor" rx="0.5" />
+                        </svg>
+                    </button>
+                    <button
+                        className="control-btn btn-maximize"
+                        onClick={() => onMaximize(id)}
+                        title="Maximize"
+                    >
+                        <svg width="10" height="10" viewBox="0 0 10 10">
+                            <rect x="1" y="1" width="8" height="8" fill="none" stroke="currentColor" strokeWidth="1.5" rx="0.5" />
+                        </svg>
+                    </button>
+                    <button
+                        className="control-btn btn-close"
+                        onClick={() => onClose(id)}
+                        title="Close"
+                    >
+                        <svg width="10" height="10" viewBox="0 0 10 10">
+                            <line x1="1.5" y1="1.5" x2="8.5" y2="8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            <line x1="8.5" y1="1.5" x2="1.5" y2="8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                        </svg>
+                    </button>
                 </div>
             </div>
             <div className="window-content">

@@ -11,8 +11,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Terminal as TerminalIcon, Github, Globe } from 'lucide-react';
 import './Desktop.css';
 
-// Scenery Wallpaper
-const WALLPAPER_URL = "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop";
+// Gentoo-themed landscape wallpaper
+const WALLPAPER_URL = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop";
 
 const Desktop = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +22,7 @@ const Desktop = () => {
         {
             id: 1,
             appId: 'terminal',
-            title: 'omindu@archlinux: ~',
+            title: 'Konsole — omindu@gentoo',
             component: <Terminal />,
             isOpen: true,
             isMinimized: false,
@@ -74,18 +74,18 @@ const Desktop = () => {
         switch (appId) {
             case 'terminal':
                 component = <Terminal />;
-                title = 'omindu@archlinux: ~';
+                title = 'Konsole — omindu@gentoo';
                 break;
             case 'projects':
                 component = <Projects />;
-                title = 'GitHub Projects';
+                title = 'Dolphin — GitHub Projects';
                 break;
             case 'browser':
                 component = <Browser initialUrl={props.url} />;
-                title = 'Web Browser';
+                title = 'Falkon — Web Browser';
                 break;
             case 'about':
-                component = <div style={{ padding: 20, color: '#cdd6f4' }}><h1>About Me</h1><p>I'm Omindu, a developer.</p></div>;
+                component = <div style={{ padding: 20, color: '#eff0f1' }}><h1>About Me</h1><p>I'm Omindu, a developer.</p></div>;
                 title = 'About Me';
                 break;
             default:
@@ -129,11 +129,54 @@ const Desktop = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
-            <div className="wallpaper" style={{ backgroundImage: `url(${WALLPAPER_URL})`, backgroundSize: 'cover' }} />
+            <div className="wallpaper" style={{ backgroundImage: `url(${WALLPAPER_URL})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
 
+            {/* Desktop Icons — top-left like KDE Plasma */}
+            <div className="desktop-icons">
+                <div className="desktop-icon" onClick={() => openApp('terminal')}>
+                    <TerminalIcon size={36} />
+                    <span>Konsole</span>
+                </div>
+                <div className="desktop-icon" onClick={() => openApp('browser', { url: 'internal://projects' })}>
+                    <Github size={36} />
+                    <span>Projects</span>
+                </div>
+                <div className="desktop-icon" onClick={() => openApp('browser', { url: 'https://google.com' })}>
+                    <Globe size={36} />
+                    <span>Falkon</span>
+                </div>
+            </div>
+
+            {/* Window area */}
+            <div className="window-area">
+                <AnimatePresence>
+                    {windows.map((win) => (
+                        win.isOpen && !win.isMinimized && (
+                            <div key={win.id} onMouseDown={() => bringToFront(win.id)}>
+                                <Window
+                                    window={win}
+                                    onClose={handleClose}
+                                    onMinimize={handleMinimize}
+                                    onMaximize={handleMaximize}
+                                />
+                            </div>
+                        )
+                    ))}
+                </AnimatePresence>
+            </div>
+
+            {/* KDE Plasma Panel — bottom */}
             <Waybar
                 onOpenLauncher={() => setIsLauncherOpen(!isLauncherOpen)}
                 onPower={() => setIsPowerMenuOpen(true)}
+                windows={windows}
+                onWindowClick={(id) => {
+                    const win = windows.find(w => w.id === id);
+                    if (win && win.isMinimized) {
+                        handleMinimize(id);
+                    }
+                    bringToFront(id);
+                }}
             />
 
             <Launcher
@@ -152,39 +195,6 @@ const Desktop = () => {
                     />
                 )}
             </AnimatePresence>
-
-            {/* Desktop Icons */}
-            <div className="desktop-icons">
-                <div className="desktop-icon" onClick={() => openApp('terminal')}>
-                    <TerminalIcon size={32} />
-                    <span>Terminal</span>
-                </div>
-                <div className="desktop-icon" onClick={() => openApp('browser', { url: 'internal://projects' })}>
-                    <Github size={32} />
-                    <span>Projects</span>
-                </div>
-                <div className="desktop-icon" onClick={() => openApp('browser', { url: 'https://google.com' })}>
-                    <Globe size={32} />
-                    <span>Browser</span>
-                </div>
-            </div>
-
-            <div className="window-area">
-                <AnimatePresence>
-                    {windows.map((win) => (
-                        win.isOpen && !win.isMinimized && (
-                            <div key={win.id} onMouseDown={() => bringToFront(win.id)}>
-                                <Window
-                                    window={win}
-                                    onClose={handleClose}
-                                    onMinimize={handleMinimize}
-                                    onMaximize={handleMaximize}
-                                />
-                            </div>
-                        )
-                    ))}
-                </AnimatePresence>
-            </div>
         </motion.div>
     );
 };

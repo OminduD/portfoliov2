@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Github, User, Power, RefreshCw, Lock, Settings, FolderOpen, Globe, Moon, Code, Monitor } from 'lucide-react';
+import { Terminal, Github, User, Power, RefreshCw, Lock, Settings, FolderOpen, Globe, Moon, Code, Monitor, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Launcher.css';
 
@@ -13,6 +13,7 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
         { id: 'terminal', name: 'Konsole', desc: 'Terminal Emulator', icon: <Terminal size={24} />, category: 'System', action: () => onLaunch('terminal'), favorite: true },
         { id: 'projects', name: 'GitHub Projects', desc: 'View Repositories', icon: <Github size={24} />, category: 'Development', action: () => onLaunch('projects'), favorite: true },
         { id: 'browser', name: 'Falkon', desc: 'Web Browser', icon: <Globe size={24} />, category: 'Internet', action: () => onLaunch('browser', { url: 'https://www.google.com/webhp?igu=1' }), favorite: true },
+        { id: 'email', name: 'Thunderbird', desc: 'Contact Me', icon: <Mail size={24} />, category: 'Internet', action: () => onLaunch('email'), favorite: true },
         { id: 'about', name: 'About Me', desc: 'Personal Info', icon: <User size={24} />, category: 'Information', action: () => onLaunch('about'), favorite: true },
         { id: 'files', name: 'Dolphin', desc: 'File Manager', icon: <FolderOpen size={24} />, category: 'System', action: () => onLaunch('browser', { url: 'internal://projects' }), favorite: false },
         { id: 'settings', name: 'System Settings', desc: 'Configure Desktop', icon: <Settings size={24} />, category: 'System', action: () => onLaunch('about'), favorite: false },

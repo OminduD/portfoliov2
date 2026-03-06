@@ -1,46 +1,49 @@
+/* Breeze Dark — Project Cards */
 .projects-container {
     height: 100%;
     overflow-y: auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
     color: var(--text-main);
+    background: var(--bg-base);
 }
 
 .project-card {
     background: var(--surface-0);
     border: 1px solid var(--surface-1);
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
     text-decoration: none;
     color: inherit;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--color-mauve);
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(61, 174, 233, 0.15);
 }
 
 .project-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--color-blue);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .project-desc {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-sub);
     flex: 1;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .project-meta {
@@ -48,13 +51,15 @@
     justify-content: space-between;
     font-size: 12px;
     color: var(--overlay-0);
-    margin-top: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--surface-1);
 }
 
 .project-lang {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
 }
 
 .lang-dot {

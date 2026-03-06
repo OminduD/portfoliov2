@@ -1,66 +1,259 @@
+/* Konsole — Oh My Zsh Edition */
 .terminal {
     height: 100%;
     width: 100%;
-    color: #cdd6f4;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 14px;
+    color: #eff0f1;
+    font-family: 'Hack', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.6;
     overflow-y: auto;
-    background-color: rgba(30, 30, 46, 0.85);
-    /* More transparent */
-    backdrop-filter: blur(10px);
-    /* Blur effect */
-    padding: 10px;
+    background: linear-gradient(180deg, #171a1c 0%, #1b1e20 100%);
+    padding: 16px;
+    position: relative;
 }
 
+.terminal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ── Neofetch ── */
+.neofetch-block {
+    margin-bottom: 16px;
+    padding: 8px 0;
+}
+
+.neofetch-line {
+    display: flex;
+    align-items: baseline;
+    height: 22px;
+}
+
+.neofetch-art {
+    color: #8e44ad;
+    font-weight: bold;
+    white-space: pre;
+    min-width: 240px;
+    text-shadow: 0 0 8px rgba(142, 68, 173, 0.4);
+    font-size: 14px;
+}
+
+.neofetch-info {
+    white-space: pre;
+    margin-left: 12px;
+}
+
+.nf-user {
+    color: #3daee9;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(61, 174, 233, 0.3);
+}
+
+.nf-at {
+    color: #eff0f1;
+}
+
+.nf-host {
+    color: #3daee9;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(61, 174, 233, 0.3);
+}
+
+.nf-separator {
+    color: #3b4045;
+}
+
+.nf-label {
+    color: #3daee9;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 90px;
+}
+
+.nf-value {
+    color: #eff0f1;
+}
+
+.color-blocks {
+    display: inline-flex;
+    gap: 0;
+}
+
+.cb {
+    font-size: 12px;
+    line-height: 1;
+}
+
+/* ── Oh My Zsh Powerline Prompt ── */
+.omz-prompt {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 4px;
+    font-size: 13px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.omz-arrow {
+    display: none;
+    /* Hidden — using segments instead */
+}
+
+.omz-segment {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.omz-seg-text {
+    padding: 0 2px;
+}
+
+.omz-seg-user {
+    background: #31563a;
+    color: #a3d9b1;
+    border-radius: 4px 0 0 4px;
+    padding-left: 6px;
+}
+
+.omz-seg-arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.seg-user-to-dir {
+    border-width: 11px 0 11px 8px;
+    border-color: transparent transparent transparent #31563a;
+}
+
+.omz-seg-dir {
+    background: #2a4a7f;
+    color: #7fb3e0;
+}
+
+.seg-dir-to-git {
+    border-width: 11px 0 11px 8px;
+    border-color: transparent transparent transparent #2a4a7f;
+}
+
+.omz-seg-git {
+    background: #4a3560;
+    color: #c49fd6;
+    border-radius: 0 4px 4px 0;
+}
+
+.seg-git-to-end {
+    border-width: 11px 0 11px 8px;
+    border-color: transparent transparent transparent #4a3560;
+}
+
+.omz-final-arrow {
+    color: #3daee9;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+.cmd-text {
+    color: #eff0f1;
+}
+
+/* ── Styled Output ── */
 .terminal-output {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     white-space: pre-wrap;
-    text-shadow: 0 0 5px rgba(205, 214, 244, 0.3);
-    /* Subtle glow */
+    word-break: break-word;
+    padding-left: 2px;
 }
 
+.out-title {
+    color: #3daee9;
+    font-weight: bold;
+}
+
+.out-cmd {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.out-highlight {
+    color: #f67400;
+    font-weight: 600;
+}
+
+.out-bullet {
+    color: #3daee9;
+}
+
+.out-emerge {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.out-error {
+    color: #ed1515;
+    font-weight: bold;
+}
+
+/* ── Command Line ── */
 .command-line {
     display: flex;
     align-items: center;
+    margin-bottom: 2px;
 }
 
-.prompt {
-    color: #a6e3a1;
-    /* Green */
-    margin-right: 8px;
-    font-weight: bold;
-}
-
-.prompt-path {
-    color: #89b4fa;
-    /* Blue */
-}
-
+/* ── Input ── */
 .input-area {
     background: transparent;
     border: none;
-    color: #cdd6f4;
+    color: #eff0f1;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 13px;
     flex: 1;
     outline: none;
-    text-shadow: 0 0 5px rgba(205, 214, 244, 0.3);
+    caret-color: transparent;
 }
 
-.ascii-art {
-    color: #cba6f7;
-    /* Mauve */
-    font-weight: bold;
-    margin-bottom: 20px;
-    line-height: 1.2;
-    text-shadow: 0 0 10px rgba(203, 166, 247, 0.5);
-    /* Stronger glow */
+/* Blinking block cursor */
+.cursor-blink {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: #3daee9;
+    animation: blink 1s step-end infinite;
+    border-radius: 1px;
+    margin-left: -2px;
+    flex-shrink: 0;
 }
 
-.command-success {
-    color: #a6e3a1;
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .command-error {
-    color: #f38ba8;
+    color: #ed1515;
+}
+
+.terminal ::selection {
+    background: rgba(61, 174, 233, 0.35);
+    color: #fff;
 }

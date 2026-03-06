@@ -13,11 +13,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1e1e2e 0%, #313244 100%);
+    background: linear-gradient(135deg, #232629 0%, #31363b 100%);
     z-index: 0;
 }
 
-/* Add a subtle pattern or grain if possible, but gradient is fine for now */
+/* Subtle dark vignette overlay — KDE Plasma style */
 .wallpaper::after {
     content: '';
     position: absolute;
@@ -25,9 +25,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(var(--color-mauve) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.1;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
 }
 
 .window-area {
@@ -41,35 +40,43 @@
 
 .desktop-icons {
     position: absolute;
-    top: 60px;
-    /* Below waybar */
+    top: 20px;
     left: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 8px;
     z-index: 5;
-    /* Above wallpaper, below windows (if windows are > 5) */
 }
 
 .desktop-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     color: var(--text-main);
     cursor: pointer;
-    padding: 10px;
-    border-radius: 8px;
-    transition: background-color 0.2s;
+    padding: 10px 12px;
+    border-radius: 4px;
+    transition: background-color 0.15s;
     width: 80px;
     text-align: center;
 }
 
 .desktop-icon:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(61, 174, 233, 0.15);
+}
+
+.desktop-icon:active {
+    background-color: rgba(61, 174, 233, 0.25);
+}
+
+.desktop-icon svg {
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
 }
 
 .desktop-icon span {
-    font-size: 12px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 11px;
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 0, 0, 0.5);
+    line-height: 1.3;
 }

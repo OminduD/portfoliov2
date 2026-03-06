@@ -4,11 +4,12 @@ import Window from './Window';
 import Terminal from './apps/Terminal';
 import Projects from './apps/Projects';
 import Browser from './apps/Browser';
+import Email from './apps/Email';
 import Login from './Login';
 import Launcher from './Launcher';
 import PowerMenu from './PowerMenu';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Terminal as TerminalIcon, Github, Globe } from 'lucide-react';
+import { Terminal as TerminalIcon, Github, Globe, Mail } from 'lucide-react';
 import './Desktop.css';
 
 // Gentoo-themed landscape wallpaper
@@ -88,6 +89,10 @@ const Desktop = () => {
                 component = <div style={{ padding: 20, color: '#eff0f1' }}><h1>About Me</h1><p>I'm Omindu, a developer.</p></div>;
                 title = 'About Me';
                 break;
+            case 'email':
+                component = <Email />;
+                title = 'Thunderbird — Contact Me';
+                break;
             default:
                 return;
         }
@@ -144,6 +149,10 @@ const Desktop = () => {
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'https://google.com' })}>
                     <Globe size={36} />
                     <span>Falkon</span>
+                </div>
+                <div className="desktop-icon" onClick={() => openApp('email')}>
+                    <Mail size={36} />
+                    <span>Thunderbird</span>
                 </div>
             </div>
 

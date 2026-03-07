@@ -16,7 +16,7 @@ const Email = () => {
 
     const inboxMessages = [
         { id: 1, from: 'KDE Community', subject: 'Welcome to KDE Plasma 6.1', date: 'Mar 5', read: true, starred: true },
-        { id: 2, from: 'Gentoo Dev', subject: 'Package update: sys-kernel/gentoo-sources-6.6.21', date: 'Mar 4', read: true, starred: false },
+        { id: 2, from: 'Arch Linux', subject: 'Package update: linux-6.12.74-1-lts', date: 'Mar 4', read: true, starred: false },
         { id: 3, from: 'GitHub', subject: '[OminduD/portfoliov2] New star on your repository', date: 'Mar 3', read: false, starred: false },
     ];
 

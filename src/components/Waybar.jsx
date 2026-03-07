@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Cpu, MemoryStick, Wifi, Volume2, Power, ChevronUp, ChevronDown, X } from 'lucide-react';
+import { Cpu, MemoryStick, Wifi, Volume2, Power, ChevronUp, ChevronDown, X, Layout } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isSameDay, isToday } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Waybar.css';
 
-const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick }) => {
+const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenApp, onShowDesktop }) => {
     const [time, setTime] = useState(new Date());
     const [cpu, setCpu] = useState(12);
     const [ram, setRam] = useState(2.4);
@@ -156,11 +156,23 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick }) => {
             {/* KDE Kickoff Launcher Button */}
             <div className="panel-left">
                 <button className="kickoff-btn" onClick={onOpenLauncher} title="Application Launcher">
-                    <svg viewBox="0 0 48 48" width="20" height="20">
-                        <circle cx="24" cy="24" r="20" fill="#3daee9" />
-                        <text x="24" y="30" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold" fontFamily="sans-serif">K</text>
-                    </svg>
+                    <img className="kickoff-icon-img" src="/kde.png" alt="KDE" />
                 </button>
+
+                {/* Quick Launch Buttons */}
+                <div className="panel-divider" />
+                <div className="quick-launch">
+                    <button className="quick-launch-btn" onClick={() => onOpenApp && onOpenApp('terminal')} title="Kitty Terminal">
+                        <img src="/kitty.svg" alt="Kitty" />
+                    </button>
+                    <button className="quick-launch-btn" onClick={() => onOpenApp && onOpenApp('browser', { url: 'https://google.com' })} title="Falkon Browser">
+                        <img src="/falcon.png" alt="Falkon" />
+                    </button>
+                    <button className="quick-launch-btn" onClick={() => onOpenApp && onOpenApp('email')} title="Thunderbird">
+                        <img src="/thunderbird.png" alt="Thunderbird" />
+                    </button>
+                </div>
+                <div className="panel-divider" />
 
                 {/* Task Manager */}
                 <div className="task-manager">
@@ -215,6 +227,12 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick }) => {
 
                 <button className="panel-power-btn" onClick={onPower} title="Leave">
                     <Power size={14} />
+                </button>
+
+                {/* Show Desktop */}
+                <div className="panel-divider" />
+                <button className="show-desktop-btn" onClick={onShowDesktop} title="Show Desktop">
+                    <Layout size={14} />
                 </button>
 
                 {/* Popups */}

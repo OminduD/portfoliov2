@@ -20,13 +20,13 @@ const SplashScreen = ({ onFinish }) => {
             <img
                 className="splash-logo"
                 src="/splash.gif"
-                alt="Gentoo Boot Splash"
+                alt="Boot Splash"
                 draggable={false}
             />
 
             <div className="splash-branding">
-                <div className="splash-title">Gentoo Linux</div>
-                <div className="splash-subtitle">KDE Plasma 6.3</div>
+                <div className="splash-title">KDE Plasma</div>
+                <div className="splash-subtitle">Loading Desktop…</div>
             </div>
 
             <div className="splash-loader">
@@ -34,7 +34,7 @@ const SplashScreen = ({ onFinish }) => {
             </div>
 
             <div className="splash-bottom">
-                Starting KDE Plasma Desktop…
+                Initializing KDE Plasma Desktop…
             </div>
         </motion.div>
     );

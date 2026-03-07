@@ -51,6 +51,65 @@
     background: rgba(61, 174, 233, 0.35);
 }
 
+.kickoff-icon-img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Quick Launch Bar */
+.quick-launch {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.quick-launch-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.quick-launch-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.quick-launch-btn:active {
+    background: rgba(61, 174, 233, 0.2);
+}
+
+.quick-launch-btn img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* Show Desktop */
+.show-desktop-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-sub);
+    padding: 6px 6px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.show-desktop-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+}
+
 /* Task Manager */
 .task-manager {
     display: flex;

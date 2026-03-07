@@ -1,53 +1,60 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Terminal.css';
 
-// EndeavourOS ASCII art
-const EOS_LOGO = [
-    '                     ./sssso-',
-    '                   `:osssssss+-',
-    '                 `:+sssssssssso/.',
-    '               `-/ossssssssssssso/.',
-    '             `-/+sssssssssssssssso+:`',
-    '           `-:/+sssssssssssssssssso+/.',
-    '         `.://osssssssssssssssssssso++-',
-    '        .://+ssssssssssssssssssssssso++:',
-    '      .:///ossssssssssssssssssssssssso++:',
-    '    `:////ssssssssssssssssssssssssssso+++.',
-    '   `-////+ssssssssssssssssssssssssssso++++-',
-    '    `..-+oosssssssssssssssssssssssso+++++/`',
-    '      ./++++++++++++++++++++++++++++++/:.',
-    '     `:::::::::::::::::::::::::------``',
+// Gentoo ASCII art
+const GENTOO_LOGO = [
+    '         -/oyddmdhs+:.',
+    '     -odNMMMMMMMMNNmhy+-`',
+    '   -yNMMMMMMMMMMMNNNmmdhy+-',
+    ' `omMMMMMMMMMMMMNmdmmmmddhhy/`',
+    ' omMMMMMMMMMMMNhhyyyohmdddhhhdo`',
+    '.ydMMMMMMMMMMdhs++so/smdddhhhhdm+`',
+    ' oyhdmNMMMMMMMNdyooydmddddhhhhyhNd.',
+    '  :oyhhdNNMMMMMMMNNNmmdddhhhhhyymMh',
+    '    .:+sydNMMMMMNNNmmmdddhhhhhhmMmy',
+    '       /mMMMMMMNNNmmmdddhhhhhmMNhs:',
+    '    `oNMMMMMMMNNNmmmddddhhdmMNhs+`',
+    '  `sNMMMMMMMMNNNmmmdddddmNMmhs/.',
+    ' /NMMMMMMMMNNNNmmmdddmNMNdso:`',
+    '+MMMMMMMNNNNNmmmmdmNMNdso/-',
+    'yMMNNNNNNNmmmmmNNMmhs+/-`',
+    '/hMMNNNNNNNNMNdhs++/-`',
+    '`/ohdmmddhys+++/:.`',
+    '  `-//////:--.',
 ];
 
+// System info section 1 — OS details
 const FASTFETCH_SECTION_1 = [
     { type: 'header' },
     { type: 'box-top' },
-    { label: 'Chassis', value: 'Notebook Micro-Star International Co., Ltd.' },
-    { label: 'OS', value: 'EndeavourOS' },
+    { label: 'Chassis', value: 'Notebook — MSI' },
+    { label: 'OS', value: 'Gentoo Linux x86_64' },
     { label: 'Kernel', value: '6.12.74-1-lts' },
-    { label: 'Packages', value: '2242 (pacman), 10 (flatpak), 10 (snap)' },
+    { label: 'Packages', value: '2242 (emerge), 10 (flatpak)' },
     { label: 'Display', value: '1920x1080 @ 60Hz [Built-in]' },
+    { label: 'Shell', value: 'zsh 5.9 (oh-my-zsh)' },
     { label: 'Terminal', value: 'konsole 25.12.2' },
-    { label: 'WM', value: 'KWin' },
+    { label: 'DE/WM', value: 'KDE Plasma / KWin (Wayland)' },
     { type: 'box-bottom' },
 ];
 
+// System info section 2 — Hardware
 const FASTFETCH_SECTION_2 = [
     { type: 'user-header' },
     { type: 'box-top' },
     { label: 'CPU', value: 'AMD Ryzen 5 4600H @ 3.00 GHz' },
-    { label: 'GPU', value: 'AMD AMD Radeon RX 5300M' },
-    { label: 'GPU', value: 'AMD Radeon Vega Series / Radeon Vega Mobile Series' },
-    { label: 'GPU Driver', value: 'amdgpu' },
+    { label: 'GPU', value: 'AMD Radeon RX 5300M' },
+    { label: 'GPU', value: 'AMD Radeon Vega Series' },
     { label: 'GPU Driver', value: 'amdgpu' },
     { label: 'Memory', value: '6.53 GiB / 22.87 GiB (29%)' },
+    { label: 'Swap', value: '0.0 GiB / 4.0 GiB' },
     { label: 'OS Age', value: '163 days' },
     { label: 'Uptime', value: '36 mins' },
     { type: 'box-bottom' },
     { type: 'color-dots' },
 ];
 
-const BOX_WIDTH = 48;
+const BOX_WIDTH = 50;
 
 const Terminal = () => {
     const [history, setHistory] = useState([
@@ -68,15 +75,15 @@ const Terminal = () => {
 
     const renderFastfetch = () => {
         const allInfoLines = [...FASTFETCH_SECTION_1, { type: 'spacer' }, ...FASTFETCH_SECTION_2];
-        const maxLines = Math.max(EOS_LOGO.length, allInfoLines.length);
+        const maxLines = Math.max(GENTOO_LOGO.length, allInfoLines.length);
         const rows = [];
 
         for (let i = 0; i < maxLines; i++) {
-            const artLine = EOS_LOGO[i] || '';
+            const artLine = GENTOO_LOGO[i] || '';
             const info = allInfoLines[i];
             rows.push(
                 <div key={i} className="ff-line">
-                    <span className="ff-art">{artLine}</span>
+                    <span className="ff-art">{artLine.padEnd(40)}</span>
                     <span className="ff-info">{info ? renderFfInfo(info) : null}</span>
                 </div>
             );
@@ -86,9 +93,7 @@ const Terminal = () => {
 
     const renderFfInfo = (info) => {
         if (info.type === 'header') {
-            return (
-                <span className="ff-empty-line"> </span>
-            );
+            return <span className="ff-empty-line"> </span>;
         }
         if (info.type === 'user-header') {
             return (
@@ -97,7 +102,7 @@ const Terminal = () => {
                     <span className="ff-colon"> : </span>
                     <span className="ff-username">omindu</span>
                     <span className="ff-at"> @ </span>
-                    <span className="ff-hostname">ominduDulneth</span>
+                    <span className="ff-hostname">gentoo</span>
                 </span>
             );
         }
@@ -135,7 +140,7 @@ const Terminal = () => {
 
     const renderPrompt = () => (
         <span className="omz-prompt">
-            <span className="omz-segment omz-seg-user"><span className="omz-seg-text"> omindu@eos </span></span>
+            <span className="omz-segment omz-seg-user"><span className="omz-seg-text"> omindu@gentoo </span></span>
             <span className="omz-seg-arrow seg-user-to-dir"></span>
             <span className="omz-segment omz-seg-dir"><span className="omz-seg-text"> ~ </span></span>
             <span className="omz-seg-arrow seg-dir-to-git"></span>
@@ -153,23 +158,24 @@ const Terminal = () => {
         switch (trimmedCmd) {
             case 'help':
                 output = `\x1bTITLE  Available commands:\x1bEND
-  \x1bCMDhelp\x1bEND        Show this help message
-  \x1bCMDabout\x1bEND       Learn more about me
-  \x1bCMDprojects\x1bEND    View my projects
-  \x1bCMDskills\x1bEND      View my tech stack
-  \x1bCMDcontact\x1bEND     Get my contact info
-  \x1bCMDclear\x1bEND       Clear the terminal
-  \x1bCMDfastfetch\x1bEND   Display system info
-  \x1bCMDpacman\x1bEND      Check installed packages
-  \x1bCMDuname\x1bEND       Show kernel info
-  \x1bCMDuptimed\x1bEND     Show uptime`;
+  \x1bCMDhelp\x1bEND          Show this help message
+  \x1bCMDabout\x1bEND         Learn more about me
+  \x1bCMDprojects\x1bEND      View my projects
+  \x1bCMDskills\x1bEND        View my tech stack
+  \x1bCMDcontact\x1bEND       Get my contact info
+  \x1bCMDclear\x1bEND         Clear the terminal
+  \x1bCMDfastfetch\x1bEND     Display system info
+  \x1bCMDneofetch\x1bEND      Display system info
+  \x1bCMDemerge\x1bEND        Check installed packages
+  \x1bCMDuname\x1bEND         Show kernel info
+  \x1bCMDuptime\x1bEND        Show uptime`;
                 break;
             case 'about':
                 output = `\x1bTITLE  About Me\x1bEND
   I'm a passionate developer who loves building cool things.
   I specialize in \x1bHLReact\x1bEND, \x1bHLNode.js\x1bEND, and modern web technologies.
   
-  Currently running \x1bHLEndeavourOS\x1bEND with \x1bHLKDE Plasma\x1bEND on a
+  Currently running \x1bHLGentoo Linux\x1bEND with \x1bHLKDE Plasma\x1bEND on a
   \x1bHLMSI\x1bEND notebook powered by \x1bHLAMD Ryzen 5 4600H\x1bEND.
   
   I also enjoy Linux rice, open-source, and automation!`;
@@ -186,7 +192,7 @@ const Terminal = () => {
   \x1bBULLET▸\x1bEND \x1bCMDFrontend\x1bEND       — React, Next.js, Vite, Framer Motion
   \x1bBULLET▸\x1bEND \x1bCMDBackend\x1bEND        — Node.js, Express, PostgreSQL
   \x1bBULLET▸\x1bEND \x1bCMDDevOps\x1bEND         — Docker, Linux, Git, CI/CD
-  \x1bBULLET▸\x1bEND \x1bCMDOS/Desktop\x1bEND     — EndeavourOS, KDE Plasma, Hyprland`;
+  \x1bBULLET▸\x1bEND \x1bCMDOS/Desktop\x1bEND     — Gentoo Linux, KDE Plasma`;
                 break;
             case 'contact':
                 output = `\x1bCMDEmail\x1bEND       omindu@example.com
@@ -197,31 +203,26 @@ const Terminal = () => {
             case 'neofetch':
                 setHistory([...history, { type: 'command', content: cmd }, { type: 'fastfetch' }]);
                 return;
-            case 'pacman':
-            case 'pacman -q':
-            case 'pacman -qq':
-                output = `\x1bTITLEInstalled packages:\x1bEND
-\x1bEMERGE[installed]\x1bEND linux-lts 6.12.74-1
-\x1bEMERGE[installed]\x1bEND plasma-desktop 6.3.2
-\x1bEMERGE[installed]\x1bEND konsole 25.12.2
-\x1bEMERGE[installed]\x1bEND firefox 135.0
-\x1bEMERGE[installed]\x1bEND vim 9.1
-\x1bEMERGE[installed]\x1bEND python 3.12.2
-\x1bEMERGE[installed]\x1bEND nodejs 22.14.0
+            case 'emerge':
+            case 'emerge --info':
+                output = `\x1bTITLEThese are the packages that would be merged:\x1bEND
 
->>> Total: \x1bHL2242\x1bEND packages (pacman), \x1bHL10\x1bEND (flatpak), \x1bHL10\x1bEND (snap)`;
+\x1bEMERGE[ebuild   R   ]\x1bEND sys-kernel/gentoo-sources-6.12.74
+\x1bEMERGE[ebuild   R   ]\x1bEND kde-plasma/plasma-desktop-6.3.2
+\x1bEMERGE[ebuild   R   ]\x1bEND app-editors/vim-9.1
+\x1bEMERGE[ebuild   R   ]\x1bEND dev-lang/python-3.12.2
+\x1bEMERGE[ebuild   R   ]\x1bEND net-misc/curl-8.6.0
+\x1bEMERGE[ebuild   R   ]\x1bEND x11-drivers/xf86-video-amdgpu-23.0.0
+
+>>> Total: \x1bHL2242\x1bEND packages installed.`;
                 break;
             case 'uname':
             case 'uname -a':
-                output = `Linux ominduDulneth \x1bHL6.12.74-1-lts\x1bEND #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux`;
+                output = `Linux gentoo \x1bHL6.12.74-1-lts\x1bEND #1 SMP PREEMPT_DYNAMIC x86_64 AMD Ryzen 5 4600H GNU/Linux`;
                 break;
             case 'uptimed':
             case 'uptime':
                 output = ` \x1bHL03:39:55\x1bEND up 36 min, 1 user, load average: 0.42, 0.38, 0.31`;
-                break;
-            case 'emerge':
-                output = `zsh: command not found: \x1bERRemerge\x1bEND
-\x1bCMDHint:\x1bEND This is EndeavourOS (Arch-based). Try \x1bHLpacman\x1bEND instead!`;
                 break;
             case 'clear': setHistory([]); return;
             case '': return;
@@ -245,7 +246,7 @@ const Terminal = () => {
         if (e.key === 'Enter') { handleCommand(input); setInput(''); }
         else if (e.key === 'ArrowUp') { e.preventDefault(); if (cmdHistory.length > 0) { const n = Math.min(histIdx + 1, cmdHistory.length - 1); setHistIdx(n); setInput(cmdHistory[n]); } }
         else if (e.key === 'ArrowDown') { e.preventDefault(); if (histIdx > 0) { setHistIdx(histIdx - 1); setInput(cmdHistory[histIdx - 1]); } else { setHistIdx(-1); setInput(''); } }
-        else if (e.key === 'Tab') { e.preventDefault(); const cmds = ['help', 'about', 'projects', 'skills', 'contact', 'fastfetch', 'neofetch', 'pacman', 'uname', 'uptime', 'uptimed', 'clear']; const m = cmds.find(c => c.startsWith(input.toLowerCase())); if (m) setInput(m); }
+        else if (e.key === 'Tab') { e.preventDefault(); const cmds = ['help', 'about', 'projects', 'skills', 'contact', 'fastfetch', 'neofetch', 'emerge', 'uname', 'uptime', 'uptimed', 'clear']; const m = cmds.find(c => c.startsWith(input.toLowerCase())); if (m) setInput(m); }
     };
 
     return (
@@ -290,7 +291,7 @@ const Terminal = () => {
             <div className="konsole-statusbar">
                 <span className="statusbar-shell">zsh</span>
                 <span className="statusbar-sep">│</span>
-                <span>omindu@ominduDulneth: ~</span>
+                <span>omindu@gentoo: ~</span>
                 <span className="statusbar-sep">│</span>
                 <span>Size: 120×40</span>
                 <span className="statusbar-right">

@@ -9,7 +9,7 @@ import Login from './Login';
 import Launcher from './Launcher';
 import PowerMenu from './PowerMenu';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Terminal as TerminalIcon, Github, Globe, Mail, Monitor, RefreshCw, Settings, FolderOpen, Image } from 'lucide-react';
+import { Monitor, RefreshCw, Settings, FolderOpen } from 'lucide-react';
 import './Desktop.css';
 
 // Gentoo-themed landscape wallpaper
@@ -198,19 +198,19 @@ const Desktop = () => {
             {/* Desktop Icons — top-left like KDE Plasma */}
             <div className="desktop-icons">
                 <div className="desktop-icon" onClick={() => openApp('terminal')}>
-                    <TerminalIcon size={36} />
+                    <img className="desktop-icon-img" src="/kitty.svg" alt="Konsole" draggable={false} />
                     <span>Konsole</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'internal://projects' })}>
-                    <Github size={36} />
+                    <img className="desktop-icon-img" src="/github.png" alt="Projects" draggable={false} />
                     <span>Projects</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'https://google.com' })}>
-                    <Globe size={36} />
+                    <img className="desktop-icon-img" src="/falcon.png" alt="Falkon" draggable={false} />
                     <span>Falkon</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('email')}>
-                    <Mail size={36} />
+                    <img className="desktop-icon-img" src="/thunderbird.png" alt="Thunderbird" draggable={false} />
                     <span>Thunderbird</span>
                 </div>
             </div>
@@ -245,11 +245,11 @@ const Desktop = () => {
                         transition={{ duration: 0.12 }}
                     >
                         <div className="ctx-item" onClick={() => openApp('terminal')}>
-                            <TerminalIcon size={14} />
+                            <img className="ctx-icon-img" src="/kitty.svg" alt="" />
                             <span>Open Konsole</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('browser', { url: 'https://google.com' })}>
-                            <Globe size={14} />
+                            <img className="ctx-icon-img" src="/falcon.png" alt="" />
                             <span>Open Falkon</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('browser', { url: 'internal://projects' })}>
@@ -257,7 +257,7 @@ const Desktop = () => {
                             <span>Open Projects</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('email')}>
-                            <Mail size={14} />
+                            <img className="ctx-icon-img" src="/thunderbird.png" alt="" />
                             <span>Open Thunderbird</span>
                         </div>
                         <div className="ctx-divider" />

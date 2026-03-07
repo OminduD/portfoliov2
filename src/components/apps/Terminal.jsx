@@ -6,26 +6,25 @@ const PAGE_LOAD_TIME = Date.now();
 // "Install date" for OS Age (Oct 25, 2025)
 const INSTALL_DATE = new Date('2025-10-25');
 
-// ASCII art
-const GENTOO_LOGO = [
-    '         -/oyddmdhs+:.',
-    '     -odNMMMMMMMMNNmhy+-`',
-    '   -yNMMMMMMMMMMMNNNmmdhy+-',
-    ' `omMMMMMMMMMMMMNmdmmmmddhhy/`',
-    ' omMMMMMMMMMMMNhhyyyohmdddhhhdo`',
-    '.ydMMMMMMMMMMdhs++so/smdddhhhhdm+`',
-    ' oyhdmNMMMMMMMNdyooydmddddhhhhyhNd.',
-    '  :oyhhdNNMMMMMMMNNNmmdddhhhhhyymMh',
-    '    .:+sydNMMMMMNNNmmmdddhhhhhhmMmy',
-    '       /mMMMMMMNNNmmmdddhhhhhmMNhs:',
-    '    `oNMMMMMMMNNNmmmddddhhdmMNhs+`',
-    '  `sNMMMMMMMMNNNmmmdddddmNMmhs/.',
-    ' /NMMMMMMMMNNNNmmmdddmNMNdso:`',
-    '+MMMMMMMNNNNNmmmmdmNMNdso/-',
-    'yMMNNNNNNNmmmmmNNMmhs+/-`',
-    '/hMMNNNNNNNNMNdhs++/-`',
-    '`/ohdmmddhys+++/:.`',
-    '  `-//////:--.',
+// Kitty cat ASCII art
+const KITTY_LOGO = [
+    '       /\\_/\\  ',
+    '      ( o.o ) ',
+    '       > ^ <  ',
+    '      /|   |\\  ',
+    '     (_|   |_) ',
+    '        \\_/   ',
+    '       _|_|_  ',
+    '      / | | \\  ',
+    '     /  | |  \\ ',
+    '    /___|_|___\\',
+    '    |  kitty  |',
+    '    |_________|',
+    '   /  /   \\  \\ ',
+    '  /__/     \\__\\',
+    '              ',
+    '  kitty terminal',
+    '   v0.36.4    ',
 ];
 
 // System info section 1 — OS details
@@ -109,11 +108,11 @@ const Terminal = () => {
     const renderFastfetch = () => {
         const section2 = getFastfetchSection2(uptime);
         const allInfoLines = [...FASTFETCH_SECTION_1, { type: 'spacer' }, ...section2];
-        const maxLines = Math.max(GENTOO_LOGO.length, allInfoLines.length);
+        const maxLines = Math.max(KITTY_LOGO.length, allInfoLines.length);
         const rows = [];
 
         for (let i = 0; i < maxLines; i++) {
-            const artLine = GENTOO_LOGO[i] || '';
+            const artLine = KITTY_LOGO[i] || '';
             const info = allInfoLines[i];
             rows.push(
                 <div key={i} className="ff-line">

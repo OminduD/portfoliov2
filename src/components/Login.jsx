@@ -50,7 +50,7 @@ const Login = ({ onLogin, wallpaper }) => {
             {/* ── Bottom Bar ── */}
             <div className="sddm-bottom-bar">
                 <div className="sddm-bottom-left">
-                    <span className="sddm-hostname">gentoo</span>
+                    <span className="sddm-hostname">linux</span>
                 </div>
                 <div className="sddm-bottom-right">
                     <div className="sddm-clock-small">

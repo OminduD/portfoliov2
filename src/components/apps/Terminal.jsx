@@ -1,5 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './Terminal.css';
+
+// Page load time for uptime calculation
+const PAGE_LOAD_TIME = Date.now();
+// "Install date" for OS Age (Oct 25, 2025)
+const INSTALL_DATE = new Date('2025-10-25');
 
 // Gentoo ASCII art
 const GENTOO_LOGO = [
@@ -38,25 +43,47 @@ const FASTFETCH_SECTION_1 = [
     { type: 'box-bottom' },
 ];
 
-// System info section 2 — Hardware
-const FASTFETCH_SECTION_2 = [
-    { type: 'user-header' },
-    { type: 'box-top' },
-    { label: 'CPU', value: 'AMD Ryzen 5 4600H @ 3.00 GHz' },
-    { label: 'GPU', value: 'AMD Radeon RX 5300M' },
-    { label: 'GPU', value: 'AMD Radeon Vega Series' },
-    { label: 'GPU Driver', value: 'amdgpu' },
-    { label: 'Memory', value: '6.53 GiB / 22.87 GiB (29%)' },
-    { label: 'Swap', value: '0.0 GiB / 4.0 GiB' },
-    { label: 'OS Age', value: '163 days' },
-    { label: 'Uptime', value: '36 mins' },
-    { type: 'box-bottom' },
-    { type: 'color-dots' },
-];
+// Helper: format uptime
+const formatUptime = (ms) => {
+    const totalSec = Math.floor(ms / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''}, ${hours} hour${hours !== 1 ? 's' : ''}`;
+    if (hours > 0) return `${hours} hour${hours !== 1 ? 's' : ''}, ${mins} min${mins !== 1 ? 's' : ''}`;
+    return `${mins} min${mins !== 1 ? 's' : ''}`;
+};
+
+// Helper: calculate OS age in days
+const getOsAge = () => {
+    const diff = Date.now() - INSTALL_DATE.getTime();
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
+};
+
+// System info section 2 — Hardware (dynamic)
+const getFastfetchSection2 = (uptimeMs) => {
+    const memUsed = (5.8 + Math.random() * 1.5).toFixed(2);
+    const memPct = Math.round((parseFloat(memUsed) / 22.87) * 100);
+    return [
+        { type: 'user-header' },
+        { type: 'box-top' },
+        { label: 'CPU', value: 'AMD Ryzen 5 4600H @ 3.00 GHz' },
+        { label: 'GPU', value: 'AMD Radeon RX 5300M' },
+        { label: 'GPU', value: 'AMD Radeon Vega Series' },
+        { label: 'GPU Driver', value: 'amdgpu' },
+        { label: 'Memory', value: `${memUsed} GiB / 22.87 GiB (${memPct}%)` },
+        { label: 'Swap', value: '0.0 GiB / 4.0 GiB' },
+        { label: 'OS Age', value: `${getOsAge()} days` },
+        { label: 'Uptime', value: formatUptime(uptimeMs) },
+        { type: 'box-bottom' },
+        { type: 'color-dots' },
+    ];
+};
 
 const BOX_WIDTH = 50;
 
 const Terminal = () => {
+    const [uptime, setUptime] = useState(Date.now() - PAGE_LOAD_TIME);
     const [history, setHistory] = useState([
         { type: 'fastfetch' },
         { type: 'output', content: 'Welcome to my portfolio! Type \x1bCMDhelp\x1bEND to see available commands.' }
@@ -73,8 +100,15 @@ const Terminal = () => {
         if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }, [history]);
 
+    // Update uptime every 30s
+    useEffect(() => {
+        const timer = setInterval(() => setUptime(Date.now() - PAGE_LOAD_TIME), 30000);
+        return () => clearInterval(timer);
+    }, []);
+
     const renderFastfetch = () => {
-        const allInfoLines = [...FASTFETCH_SECTION_1, { type: 'spacer' }, ...FASTFETCH_SECTION_2];
+        const section2 = getFastfetchSection2(uptime);
+        const allInfoLines = [...FASTFETCH_SECTION_1, { type: 'spacer' }, ...section2];
         const maxLines = Math.max(GENTOO_LOGO.length, allInfoLines.length);
         const rows = [];
 

@@ -8,15 +8,16 @@ import Email from './apps/Email';
 import Login from './Login';
 import Launcher from './Launcher';
 import PowerMenu from './PowerMenu';
+import SplashScreen from './SplashScreen';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Monitor, RefreshCw, Settings, FolderOpen } from 'lucide-react';
 import './Desktop.css';
 
-// Gentoo-themed landscape wallpaper
 const WALLPAPER_URL = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop";
 
 const Desktop = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [splashDone, setSplashDone] = useState(false);
     const [isLauncherOpen, setIsLauncherOpen] = useState(false);
     const [isPowerMenuOpen, setIsPowerMenuOpen] = useState(false);
     const [contextMenu, setContextMenu] = useState(null);
@@ -25,7 +26,7 @@ const Desktop = () => {
         {
             id: 1,
             appId: 'terminal',
-            title: 'Konsole — omindu@gentoo',
+            title: 'Kitty — omindu@linux',
             component: <Terminal />,
             isOpen: true,
             isMinimized: false,
@@ -50,15 +51,15 @@ const Desktop = () => {
         }, 5000);
     }, []);
 
-    // Welcome notification on login
+    // Welcome notification after splash finishes
     useEffect(() => {
-        if (isLoggedIn) {
+        if (splashDone) {
             const timer = setTimeout(() => {
-                showNotification('Welcome back, Omindu!', 'Gentoo Linux • KDE Plasma 6.3 • Wayland', '🐧');
+                showNotification('Welcome back, Omindu!', 'KDE Plasma 6.3 • Wayland', '🐧');
             }, 800);
             return () => clearTimeout(timer);
         }
-    }, [isLoggedIn, showNotification]);
+    }, [splashDone, showNotification]);
 
     const handleClose = (id) => {
         setWindows(windows.map(w => w.id === id ? { ...w, isOpen: false } : w));
@@ -116,7 +117,7 @@ const Desktop = () => {
         switch (appId) {
             case 'terminal':
                 component = <Terminal />;
-                title = 'Konsole — omindu@gentoo';
+                title = 'Kitty — omindu@linux';
                 break;
             case 'projects':
                 component = <Projects />;
@@ -159,9 +160,9 @@ const Desktop = () => {
     };
 
     const handlePower = (action) => {
-        if (action === 'lock') setIsLoggedIn(false);
+        if (action === 'lock') { setIsLoggedIn(false); setSplashDone(false); }
         if (action === 'restart') window.location.reload();
-        if (action === 'shutdown') setIsLoggedIn(false);
+        if (action === 'shutdown') { setIsLoggedIn(false); setSplashDone(false); }
         if (action === 'sleep') alert("Zzz... (Just kidding, I can't sleep!)");
         setIsPowerMenuOpen(false);
     };
@@ -185,6 +186,15 @@ const Desktop = () => {
         return <Login onLogin={() => setIsLoggedIn(true)} wallpaper={WALLPAPER_URL} />;
     }
 
+    // Loading splash between lock screen and desktop
+    if (!splashDone) {
+        return (
+            <AnimatePresence mode="wait">
+                <SplashScreen key="splash" onFinish={() => setSplashDone(true)} />
+            </AnimatePresence>
+        );
+    }
+
     return (
         <motion.div
             className="desktop"
@@ -198,8 +208,8 @@ const Desktop = () => {
             {/* Desktop Icons — top-left like KDE Plasma */}
             <div className="desktop-icons">
                 <div className="desktop-icon" onClick={() => openApp('terminal')}>
-                    <img className="desktop-icon-img" src="/kitty.svg" alt="Konsole" draggable={false} />
-                    <span>Konsole</span>
+                    <img className="desktop-icon-img" src="/kitty.svg" alt="Kitty" draggable={false} />
+                    <span>Kitty</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'internal://projects' })}>
                     <img className="desktop-icon-img" src="/github.png" alt="Projects" draggable={false} />
@@ -246,7 +256,7 @@ const Desktop = () => {
                     >
                         <div className="ctx-item" onClick={() => openApp('terminal')}>
                             <img className="ctx-icon-img" src="/kitty.svg" alt="" />
-                            <span>Open Konsole</span>
+                            <span>Open Kitty</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('browser', { url: 'https://google.com' })}>
                             <img className="ctx-icon-img" src="/falcon.png" alt="" />
@@ -265,7 +275,7 @@ const Desktop = () => {
                             <RefreshCw size={14} />
                             <span>Refresh Desktop</span>
                         </div>
-                        <div className="ctx-item" onClick={() => showNotification('System Info', `Gentoo Linux • KDE Plasma 6.3\nKernel 6.12.74-1-lts • Wayland`, '🖥️')}>
+                        <div className="ctx-item" onClick={() => showNotification('System Info', `Arch Linux • KDE Plasma 6.3\nKernel 6.12.74-1-lts • Wayland`, '🖥️')}>
                             <Monitor size={14} />
                             <span>System Info</span>
                         </div>
@@ -313,6 +323,11 @@ const Desktop = () => {
                         handleMinimize(id);
                     }
                     bringToFront(id);
+                }}
+                onOpenApp={openApp}
+                onShowDesktop={() => {
+                    const anyVisible = windows.some(w => w.isOpen && !w.isMinimized);
+                    setWindows(windows.map(w => w.isOpen ? { ...w, isMinimized: anyVisible } : w));
                 }}
             />
 

@@ -6,7 +6,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: #1b1e20;
+    background: #0d1117;
     font-family: var(--font-sans);
 }
 
@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #1a1d1f;
+    background: #0c0e12;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     height: 32px;
     padding: 0 4px;
@@ -50,15 +50,15 @@
 
 .konsole-tab.active {
     color: #eff0f1;
-    background: #232629;
-    border-bottom-color: #3daee9;
+    background: #161b22;
+    border-bottom-color: #7b5cdf;
 }
 
 .konsole-tab-icon {
     font-size: 10px;
-    color: #3daee9;
+    color: #7b5cdf;
     font-weight: bold;
-    font-family: 'Hack', monospace;
+    font-family: 'Hack', 'JetBrains Mono', monospace;
 }
 
 .konsole-tab-close {
@@ -105,14 +105,31 @@
 /* ── Terminal Content ── */
 .terminal {
     flex: 1;
-    color: #eff0f1;
-    font-family: 'Hack', 'Fira Code', monospace;
-    font-size: 13px;
-    line-height: 1.6;
+    color: #c9d1d9;
+    font-family: 'Hack', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 12.5px;
+    line-height: 1.55;
     overflow-y: auto;
-    background: #232629;
-    padding: 12px 16px;
+    background: #0d1117;
+    padding: 10px 14px;
     position: relative;
+}
+
+.terminal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+}
+
+.terminal::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.14);
 }
 
 /* ── Status Bar ── */
@@ -122,77 +139,135 @@
     gap: 8px;
     padding: 0 12px;
     height: 22px;
-    background: #1a1d1f;
+    background: #0c0e12;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     font-size: 10px;
-    color: #555;
+    color: #484f58;
     flex-shrink: 0;
-    font-family: 'Hack', monospace;
+    font-family: 'Hack', 'JetBrains Mono', monospace;
 }
 
-/* ── Neofetch ── */
-.neofetch-block {
-    margin-bottom: 12px;
+.statusbar-shell {
+    color: #7b5cdf;
+    font-weight: 600;
+}
+
+.statusbar-sep {
+    color: #30363d;
+}
+
+.statusbar-right {
+    margin-left: auto;
+}
+
+.statusbar-encoding {
+    color: #484f58;
+}
+
+/* ═══════════════════════════════
+   Fastfetch — Box-drawing layout
+   ═══════════════════════════════ */
+
+.ff-block {
+    margin-bottom: 8px;
     padding: 4px 0;
 }
 
-.neofetch-line {
+.ff-line {
     display: flex;
     align-items: baseline;
-    height: 21px;
+    min-height: 19px;
+    line-height: 1.5;
 }
 
-.neofetch-art {
-    color: #8e44ad;
+.ff-art {
+    color: #7b5cdf;
     font-weight: bold;
     white-space: pre;
-    min-width: 240px;
-    text-shadow: 0 0 6px rgba(142, 68, 173, 0.3);
-    font-size: 14px;
+    min-width: 260px;
+    text-shadow: 0 0 10px rgba(123, 92, 223, 0.35);
+    font-size: 12.5px;
+    letter-spacing: -0.2px;
 }
 
-.neofetch-info {
+.ff-info {
     white-space: pre;
-    margin-left: 12px;
+    margin-left: 8px;
+    font-size: 12.5px;
 }
 
-.nf-user {
-    color: #3daee9;
+/* ── Fastfetch Info Rows ── */
+.ff-empty-line {
+    display: block;
+    height: 1px;
+}
+
+.ff-user-line {
+    display: inline;
+}
+
+.ff-icon {
+    color: #7b5cdf;
+    margin-right: 2px;
+}
+
+.ff-username {
+    color: #7b5cdf;
     font-weight: bold;
 }
 
-.nf-at {
-    color: #eff0f1;
+.ff-at {
+    color: #484f58;
 }
 
-.nf-host {
-    color: #3daee9;
+.ff-hostname {
+    color: #7b5cdf;
     font-weight: bold;
 }
 
-.nf-separator {
-    color: #3b4045;
+.ff-colon {
+    color: #484f58;
 }
 
-.nf-label {
-    color: #3daee9;
+.ff-box-border {
+    color: #7b5cdf;
+    opacity: 0.5;
+}
+
+.ff-box-side {
+    color: #7b5cdf;
+    opacity: 0.5;
+}
+
+.ff-spacer {
+    display: block;
+    height: 6px;
+}
+
+.ff-info-row {
+    display: inline;
+}
+
+.ff-label {
+    color: #7b5cdf;
     font-weight: bold;
     display: inline-block;
-    min-width: 90px;
+    min-width: 100px;
 }
 
-.nf-value {
-    color: #eff0f1;
+.ff-value {
+    color: #c9d1d9;
 }
 
-.color-blocks {
+.ff-color-dots {
     display: inline-flex;
     gap: 0;
+    font-size: 14px;
+    margin-top: 4px;
 }
 
-.cb {
-    font-size: 12px;
-    line-height: 1;
+.ff-dot {
+    text-shadow: 0 0 8px currentColor;
 }
 
 /* ── Oh My Zsh Powerline Prompt ── */
@@ -200,7 +275,7 @@
     display: inline-flex;
     align-items: center;
     margin-right: 4px;
-    font-size: 13px;
+    font-size: 12.5px;
     flex-shrink: 0;
     white-space: nowrap;
 }
@@ -210,7 +285,7 @@
     align-items: center;
     height: 22px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11.5px;
 }
 
 .omz-seg-text {
@@ -218,8 +293,8 @@
 }
 
 .omz-seg-user {
-    background: #31563a;
-    color: #a3d9b1;
+    background: #1a3a28;
+    color: #7ee0a0;
     border-radius: 4px 0 0 4px;
     padding-left: 6px;
 }
@@ -233,38 +308,38 @@
 
 .seg-user-to-dir {
     border-width: 11px 0 11px 8px;
-    border-color: transparent transparent transparent #31563a;
+    border-color: transparent transparent transparent #1a3a28;
 }
 
 .omz-seg-dir {
-    background: #2a4a7f;
-    color: #7fb3e0;
+    background: #1a2e50;
+    color: #61afef;
 }
 
 .seg-dir-to-git {
     border-width: 11px 0 11px 8px;
-    border-color: transparent transparent transparent #2a4a7f;
+    border-color: transparent transparent transparent #1a2e50;
 }
 
 .omz-seg-git {
-    background: #4a3560;
+    background: #2a1a40;
     color: #c49fd6;
     border-radius: 0 4px 4px 0;
 }
 
 .seg-git-to-end {
     border-width: 11px 0 11px 8px;
-    border-color: transparent transparent transparent #4a3560;
+    border-color: transparent transparent transparent #2a1a40;
 }
 
 .omz-final-arrow {
-    color: #3daee9;
+    color: #7b5cdf;
     font-weight: bold;
     margin-left: 2px;
 }
 
 .cmd-text {
-    color: #eff0f1;
+    color: #c9d1d9;
 }
 
 /* ── Styled Output ── */
@@ -276,33 +351,33 @@
 }
 
 .out-title {
-    color: #3daee9;
+    color: #7b5cdf;
     font-weight: bold;
 }
 
 .out-cmd {
-    color: #27ae60;
+    color: #7ee0a0;
     font-weight: 600;
 }
 
 .out-highlight,
 .out-hl {
-    color: #f67400;
+    color: #e5c07b;
     font-weight: 600;
 }
 
 .out-bullet {
-    color: #3daee9;
+    color: #7b5cdf;
 }
 
 .out-emerge {
-    color: #27ae60;
+    color: #7ee0a0;
     font-weight: bold;
 }
 
 .out-error,
 .out-err {
-    color: #ed1515;
+    color: #f85149;
     font-weight: bold;
 }
 
@@ -317,23 +392,25 @@
 .input-area {
     background: transparent;
     border: none;
-    color: #eff0f1;
+    color: #c9d1d9;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 12.5px;
     flex: 1;
     outline: none;
     caret-color: transparent;
 }
 
+/* ── Cursor ── */
 .cursor-blink {
     display: inline-block;
     width: 8px;
     height: 16px;
-    background: #3daee9;
+    background: #7b5cdf;
     animation: blink 1s step-end infinite;
     border-radius: 1px;
     margin-left: -2px;
     flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(123, 92, 223, 0.4);
 }
 
 @keyframes blink {
@@ -349,6 +426,6 @@
 }
 
 .terminal ::selection {
-    background: rgba(61, 174, 233, 0.35);
+    background: rgba(123, 92, 223, 0.35);
     color: #fff;
 }

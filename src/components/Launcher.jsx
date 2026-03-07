@@ -10,7 +10,7 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
     const inputRef = useRef(null);
 
     const apps = [
-        { id: 'terminal', name: 'Konsole', desc: 'Terminal Emulator', icon: <img className="launcher-app-icon" src="/kitty.svg" alt="Konsole" />, category: 'System', action: () => onLaunch('terminal'), favorite: true },
+        { id: 'terminal', name: 'Kitty', desc: 'Terminal Emulator', icon: <img className="launcher-app-icon" src="/kitty.svg" alt="Kitty" />, category: 'System', action: () => onLaunch('terminal'), favorite: true },
         { id: 'projects', name: 'GitHub Projects', desc: 'View Repositories', icon: <img className="launcher-app-icon" src="/github.png" alt="GitHub" />, category: 'Development', action: () => onLaunch('projects'), favorite: true },
         { id: 'browser', name: 'Falkon', desc: 'Web Browser', icon: <img className="launcher-app-icon" src="/falcon.png" alt="Falkon" />, category: 'Internet', action: () => onLaunch('browser', { url: 'https://www.google.com/webhp?igu=1' }), favorite: true },
         { id: 'email', name: 'Thunderbird', desc: 'Contact Me', icon: <img className="launcher-app-icon" src="/thunderbird.png" alt="Thunderbird" />, category: 'Internet', action: () => onLaunch('email'), favorite: true },
@@ -66,7 +66,7 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
                         </div>
                         <div className="kickoff-user-info">
                             <span className="kickoff-user-name">OminduD</span>
-                            <span className="kickoff-user-role">Developer · Gentoo Linux</span>
+                            <span className="kickoff-user-role">Developer · KDE Plasma</span>
                         </div>
                         <div className="kickoff-header-actions">
                             <button className="kickoff-settings-btn" onClick={() => { onLaunch('about'); onClose(); }} title="Settings">

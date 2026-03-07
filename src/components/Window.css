@@ -9,6 +9,12 @@
     position: absolute;
 }
 
+.window-maximized {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+}
+
 .window-header {
     height: 30px;
     background: linear-gradient(180deg, #3b4045 0%, #31363b 100%);

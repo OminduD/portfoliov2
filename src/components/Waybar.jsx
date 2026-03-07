@@ -5,6 +5,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './Waybar.css';
 
 const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenApp, onShowDesktop }) => {
+
+    // Map appId to icon path for taskbar
+    const getAppIcon = (appId) => {
+        const icons = {
+            terminal: '/kitty.svg',
+            projects: '/github.png',
+            browser: '/falcon.png',
+            email: '/thunderbird.png',
+            about: '/kde.png'
+        };
+        return icons[appId] || null;
+    };
     const [time, setTime] = useState(new Date());
     const [cpu, setCpu] = useState(12);
     const [ram, setRam] = useState(2.4);
@@ -183,6 +195,9 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
                             onClick={() => onWindowClick && onWindowClick(win.id)}
                             title={win.title}
                         >
+                            {getAppIcon(win.appId) && (
+                                <img className="task-btn-icon" src={getAppIcon(win.appId)} alt="" />
+                            )}
                             <span className="task-btn-text">{win.title.split('—')[0].trim()}</span>
                         </button>
                     ))}

@@ -167,6 +167,13 @@
     white-space: nowrap;
 }
 
+.task-btn-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 /* System Tray */
 .systray-item {
     display: flex;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Waybar from './Waybar';
 import Window from './Window';
 import Terminal from './apps/Terminal';
@@ -9,7 +9,7 @@ import Login from './Login';
 import Launcher from './Launcher';
 import PowerMenu from './PowerMenu';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Terminal as TerminalIcon, Github, Globe, Mail } from 'lucide-react';
+import { Terminal as TerminalIcon, Github, Globe, Mail, Monitor, RefreshCw, Settings, FolderOpen, Image } from 'lucide-react';
 import './Desktop.css';
 
 // Gentoo-themed landscape wallpaper
@@ -19,6 +19,8 @@ const Desktop = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLauncherOpen, setIsLauncherOpen] = useState(false);
     const [isPowerMenuOpen, setIsPowerMenuOpen] = useState(false);
+    const [contextMenu, setContextMenu] = useState(null);
+    const [notifications, setNotifications] = useState([]);
     const [windows, setWindows] = useState([
         {
             id: 1,
@@ -31,11 +33,32 @@ const Desktop = () => {
             x: null,
             y: null,
             width: 800,
-            height: 500
+            height: 500,
+            isMaximized: false,
+            prevBounds: null
         }
     ]);
     const [activeWindowId, setActiveWindowId] = useState(1);
     const [nextZIndex, setNextZIndex] = useState(10);
+
+    // Show welcome notification on first login
+    const showNotification = useCallback((title, body, icon = '🔔') => {
+        const id = Date.now();
+        setNotifications(prev => [...prev, { id, title, body, icon }]);
+        setTimeout(() => {
+            setNotifications(prev => prev.filter(n => n.id !== id));
+        }, 5000);
+    }, []);
+
+    // Welcome notification on login
+    useEffect(() => {
+        if (isLoggedIn) {
+            const timer = setTimeout(() => {
+                showNotification('Welcome back, Omindu!', 'Gentoo Linux • KDE Plasma 6.3 • Wayland', '🐧');
+            }, 800);
+            return () => clearTimeout(timer);
+        }
+    }, [isLoggedIn, showNotification]);
 
     const handleClose = (id) => {
         setWindows(windows.map(w => w.id === id ? { ...w, isOpen: false } : w));
@@ -46,13 +69,31 @@ const Desktop = () => {
     };
 
     const handleMaximize = (id) => {
-        setWindows(windows.map(w => w.id === id ? {
-            ...w,
-            width: w.width === '100%' ? 800 : '100%',
-            height: w.height === '100%' ? 500 : '100%',
-            x: w.width === '100%' ? null : 0,
-            y: w.height === '100%' ? null : 0
-        } : w));
+        setWindows(windows.map(w => {
+            if (w.id !== id) return w;
+            if (w.isMaximized) {
+                // Restore to previous bounds
+                return {
+                    ...w,
+                    isMaximized: false,
+                    width: w.prevBounds?.width || 800,
+                    height: w.prevBounds?.height || 500,
+                    x: w.prevBounds?.x ?? null,
+                    y: w.prevBounds?.y ?? null
+                };
+            } else {
+                // Maximize — fill the window-area
+                return {
+                    ...w,
+                    isMaximized: true,
+                    prevBounds: { width: w.width, height: w.height, x: w.x, y: w.y },
+                    width: '100%',
+                    height: '100%',
+                    x: 0,
+                    y: 0
+                };
+            }
+        }));
     };
 
     const bringToFront = (id) => {
@@ -108,7 +149,9 @@ const Desktop = () => {
             width: 800,
             height: 600,
             x: null,
-            y: null
+            y: null,
+            isMaximized: false,
+            prevBounds: null
         };
 
         setWindows([...windows, newWindow]);
@@ -123,6 +166,21 @@ const Desktop = () => {
         setIsPowerMenuOpen(false);
     };
 
+    // Right-click context menu on desktop
+    const handleContextMenu = (e) => {
+        // Only show on the desktop bg / wallpaper / icons area, not inside windows
+        if (e.target.closest('.window') || e.target.closest('.konsole-wrapper')) return;
+        e.preventDefault();
+        setContextMenu({ x: e.clientX, y: e.clientY });
+    };
+
+    // Close context menu on any click
+    useEffect(() => {
+        const close = () => setContextMenu(null);
+        window.addEventListener('click', close);
+        return () => window.removeEventListener('click', close);
+    }, []);
+
     if (!isLoggedIn) {
         return <Login onLogin={() => setIsLoggedIn(true)} wallpaper={WALLPAPER_URL} />;
     }
@@ -133,6 +191,7 @@ const Desktop = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
+            onContextMenu={handleContextMenu}
         >
             <div className="wallpaper" style={{ backgroundImage: `url(${WALLPAPER_URL})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
 
@@ -170,6 +229,75 @@ const Desktop = () => {
                                 />
                             </div>
                         )
+                    ))}
+                </AnimatePresence>
+            </div>
+
+            {/* ── Right-click Context Menu ── */}
+            <AnimatePresence>
+                {contextMenu && (
+                    <motion.div
+                        className="ctx-menu"
+                        style={{ left: contextMenu.x, top: contextMenu.y }}
+                        initial={{ opacity: 0, scale: 0.92, y: -4 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.92 }}
+                        transition={{ duration: 0.12 }}
+                    >
+                        <div className="ctx-item" onClick={() => openApp('terminal')}>
+                            <TerminalIcon size={14} />
+                            <span>Open Konsole</span>
+                        </div>
+                        <div className="ctx-item" onClick={() => openApp('browser', { url: 'https://google.com' })}>
+                            <Globe size={14} />
+                            <span>Open Falkon</span>
+                        </div>
+                        <div className="ctx-item" onClick={() => openApp('browser', { url: 'internal://projects' })}>
+                            <FolderOpen size={14} />
+                            <span>Open Projects</span>
+                        </div>
+                        <div className="ctx-item" onClick={() => openApp('email')}>
+                            <Mail size={14} />
+                            <span>Open Thunderbird</span>
+                        </div>
+                        <div className="ctx-divider" />
+                        <div className="ctx-item" onClick={() => window.location.reload()}>
+                            <RefreshCw size={14} />
+                            <span>Refresh Desktop</span>
+                        </div>
+                        <div className="ctx-item" onClick={() => showNotification('System Info', `Gentoo Linux • KDE Plasma 6.3\nKernel 6.12.74-1-lts • Wayland`, '🖥️')}>
+                            <Monitor size={14} />
+                            <span>System Info</span>
+                        </div>
+                        <div className="ctx-divider" />
+                        <div className="ctx-item ctx-item-muted">
+                            <Settings size={14} />
+                            <span>Configure Desktop…</span>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ── Notification Toasts ── */}
+            <div className="notification-area">
+                <AnimatePresence>
+                    {notifications.map(n => (
+                        <motion.div
+                            key={n.id}
+                            className="notification-toast"
+                            initial={{ opacity: 0, x: 80, scale: 0.9 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            exit={{ opacity: 0, x: 80, scale: 0.9 }}
+                            transition={{ type: 'spring', damping: 22, stiffness: 300 }}
+                            onClick={() => setNotifications(prev => prev.filter(nn => nn.id !== n.id))}
+                        >
+                            <span className="notif-icon">{n.icon}</span>
+                            <div className="notif-body">
+                                <div className="notif-title">{n.title}</div>
+                                <div className="notif-text">{n.body}</div>
+                            </div>
+                            <div className="notif-progress" />
+                        </motion.div>
                     ))}
                 </AnimatePresence>
             </div>

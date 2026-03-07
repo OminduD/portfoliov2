@@ -356,3 +356,10 @@
     color: var(--overlay-0);
     font-size: 13px;
 }
+
+/* Image-based app icons in launcher */
+.launcher-app-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}

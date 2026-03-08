@@ -120,7 +120,7 @@
     min-width: 0;
 }
 
-.task-btn {
+.task-item {
     background: transparent;
     border: none;
     color: var(--text-sub);
@@ -138,19 +138,20 @@
     height: 30px;
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
-.task-btn:hover {
+.task-item:hover {
     background: rgba(255, 255, 255, 0.06);
     color: var(--text-main);
 }
 
-.task-btn.active {
+.task-item.active {
     background: rgba(61, 174, 233, 0.15);
     color: var(--text-main);
 }
 
-.task-btn.active::after {
+.task-item.active::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -161,13 +162,13 @@
     border-radius: 1px;
 }
 
-.task-btn-text {
+.task-title {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.task-btn-icon {
+.task-icon {
     width: 16px;
     height: 16px;
     object-fit: contain;

@@ -212,7 +212,7 @@ const Desktop = () => {
                     <span>Kitty</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'internal://projects' })}>
-                    <img className="desktop-icon-img" src="/github.png" alt="Projects" draggable={false} />
+                    <img className="desktop-icon-img" src="/project.png" alt="Projects" draggable={false} />
                     <span>Projects</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'https://google.com' })}>

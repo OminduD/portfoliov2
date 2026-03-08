@@ -1,29 +1,37 @@
-/* KDE Kickoff Launcher — Premium */
+/* ═══════════════════════════════
+   KDE Kickoff Launcher — Redesigned
+   ═══════════════════════════════ */
+
 .kickoff-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
     z-index: 1000;
+    background: rgba(0, 0, 0, 0.15);
 }
 
 .kickoff-container {
     position: absolute;
-    bottom: 44px;
-    left: 4px;
-    width: 580px;
-    height: 540px;
-    background: linear-gradient(180deg, #272b30 0%, #232629 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    bottom: 48px;
+    left: 6px;
+    width: 600px;
+    height: 560px;
+    background: rgba(22, 24, 30, 0.92);
+    backdrop-filter: blur(32px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
     box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        0 24px 80px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
     overflow: hidden;
+    animation: kickoffSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes kickoffSlideIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ── User Header ── */
@@ -31,18 +39,18 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(255, 255, 255, 0.02);
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.015);
 }
 
 .kickoff-user-avatar {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid var(--accent);
-    box-shadow: 0 0 16px rgba(61, 174, 233, 0.2);
+    border: 2px solid rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.15);
     flex-shrink: 0;
 }
 
@@ -67,6 +75,7 @@
 .kickoff-user-role {
     font-size: 11px;
     color: var(--text-sub);
+    opacity: 0.7;
 }
 
 .kickoff-header-actions {
@@ -78,7 +87,7 @@
     border: none;
     color: var(--text-sub);
     padding: 6px;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.15s;
     display: flex;
@@ -91,8 +100,8 @@
 
 /* ── Search ── */
 .kickoff-search-bar {
-    padding: 10px 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
     display: flex;
     align-items: center;
@@ -100,56 +109,60 @@
 
 .kickoff-search-icon {
     position: absolute;
-    left: 26px;
-    color: var(--overlay-0);
+    left: 28px;
+    color: rgba(255, 255, 255, 0.25);
     pointer-events: none;
 }
 
 .kickoff-search {
     width: 100%;
     background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 10px 12px 10px 36px;
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 10px 12px 10px 38px;
+    border-radius: 10px;
     color: var(--text-main);
-    font-size: 14px;
+    font-size: 13px;
     font-family: var(--font-sans);
     outline: none;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .kickoff-search:focus {
-    border-color: var(--accent);
-    background: rgba(61, 174, 233, 0.06);
-    box-shadow: 0 0 0 3px rgba(61, 174, 233, 0.1);
+    border-color: rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.04);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
 }
 
 .kickoff-search::placeholder {
-    color: var(--overlay-0);
+    color: rgba(255, 255, 255, 0.2);
 }
 
-/* ── Body ── */
-.kickoff-body {
-    display: flex;
+/* ── Content Area (sidebar + apps) ── */
+.kickoff-content {
     flex: 1;
+    display: flex;
+    flex-direction: row;
     min-height: 0;
+    overflow: hidden;
 }
 
 /* ── Sidebar ── */
 .kickoff-sidebar {
-    width: 130px;
+    width: 140px;
     background: rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(255, 255, 255, 0.04);
     display: flex;
     flex-direction: column;
     padding: 8px 0;
+    overflow-y: auto;
+    flex-shrink: 0;
 }
 
 .kickoff-tab {
     background: transparent;
     border: none;
-    color: var(--text-sub);
-    padding: 10px 14px;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 9px 16px;
     text-align: left;
     font-size: 12px;
     font-family: var(--font-sans);
@@ -159,207 +172,152 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
 .kickoff-tab:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.035);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .kickoff-tab.active {
-    background: rgba(61, 174, 233, 0.08);
-    color: var(--accent);
-    border-left-color: var(--accent);
+    background: rgba(59, 130, 246, 0.06);
+    color: #60a5fa;
+    border-left-color: #3b82f6;
 }
 
-.kickoff-tab-icon {
-    font-size: 14px;
-    width: 18px;
-    text-align: center;
-}
-
-.kickoff-sidebar-spacer {
-    flex: 1;
-}
-
-.kickoff-power-row {
-    display: flex;
-    justify-content: center;
-    gap: 4px;
-    padding: 8px 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.kickoff-power-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-sub);
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.kickoff-power-btn:hover {
-    background: rgba(237, 21, 21, 0.12);
-    color: var(--color-red);
-    transform: scale(1.1);
-}
-
-/* ── App Content Area ── */
-.kickoff-content {
+/* ── Apps Area ── */
+.kickoff-apps-area {
     flex: 1;
     overflow-y: auto;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-}
-
-.kickoff-section-title {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--overlay-0);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    padding: 4px 8px 10px;
-}
-
-/* ── Favorites Grid ── */
-.kickoff-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    padding: 0 4px;
-}
-
-.kickoff-grid-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 8px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.15s;
-}
-
-.kickoff-grid-item:hover {
-    background: rgba(61, 174, 233, 0.08);
-}
-
-.kickoff-grid-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, rgba(61, 174, 233, 0.15) 0%, rgba(61, 174, 233, 0.08) 100%);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.kickoff-grid-icon.hovered {
-    background: linear-gradient(135deg, rgba(61, 174, 233, 0.25) 0%, rgba(61, 174, 233, 0.15) 100%);
-    box-shadow: 0 4px 16px rgba(61, 174, 233, 0.2);
-}
-
-.kickoff-grid-name {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-main);
-    text-align: center;
-}
-
-/* ── List View ── */
-.kickoff-list {
+    padding: 8px 10px;
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
-.kickoff-item {
+.kickoff-app-item {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     padding: 10px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.15s;
-}
-
-.kickoff-item:hover,
-.kickoff-item.selected {
-    background: rgba(61, 174, 233, 0.1);
-}
-
-.kickoff-item:active {
-    background: rgba(61, 174, 233, 0.18);
-    transform: scale(0.98);
-}
-
-.kickoff-item-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(61, 174, 233, 0.1);
     border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kickoff-app-item:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.kickoff-app-item:active {
+    background: rgba(59, 130, 246, 0.14);
+    transform: scale(0.985);
+}
+
+.kickoff-app-icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent);
+    color: #60a5fa;
     flex-shrink: 0;
     transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.kickoff-item-icon.hovered {
-    background: rgba(61, 174, 233, 0.2);
-    box-shadow: 0 4px 12px rgba(61, 174, 233, 0.15);
+.kickoff-app-item:hover .kickoff-app-icon {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.1);
 }
 
-.kickoff-item-info {
+.kickoff-app-details {
     display: flex;
     flex-direction: column;
-    flex: 1;
     min-width: 0;
 }
 
-.kickoff-item-name {
+.kickoff-app-name {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-main);
 }
 
-.kickoff-item-desc {
+.kickoff-app-desc {
     font-size: 11px;
-    color: var(--text-sub);
+    color: rgba(255, 255, 255, 0.35);
     margin-top: 1px;
-}
-
-.kickoff-item-category {
-    font-size: 10px;
-    color: var(--overlay-0);
-    padding: 2px 8px;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 10px;
-    flex-shrink: 0;
-}
-
-.kickoff-empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--overlay-0);
-    font-size: 13px;
 }
 
 /* Image-based app icons in launcher */
 .launcher-app-icon {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
+}
+
+/* ── Footer ── */
+.kickoff-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.kickoff-power-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: var(--font-sans);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kickoff-power-btn:hover {
+    background: rgba(239, 68, 68, 0.08);
+    color: #f87171;
+}
+
+/* Scrollbar for apps area */
+.kickoff-apps-area::-webkit-scrollbar {
+    width: 5px;
+}
+
+.kickoff-apps-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.kickoff-apps-area::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+}
+
+.kickoff-apps-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.kickoff-sidebar::-webkit-scrollbar {
+    width: 3px;
+}
+
+.kickoff-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.kickoff-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
 }

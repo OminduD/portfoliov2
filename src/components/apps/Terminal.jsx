@@ -3,42 +3,39 @@ import './Terminal.css';
 
 // Page load time for uptime calculation
 const PAGE_LOAD_TIME = Date.now();
-// "Install date" for OS Age (Oct 25, 2025)
-const INSTALL_DATE = new Date('2025-10-25');
 
-// Kitty cat ASCII art
+// Emoji ASCII art
 const KITTY_LOGO = [
-    '       /\\_/\\  ',
-    '      ( o.o ) ',
-    '       > ^ <  ',
-    '      /|   |\\  ',
-    '     (_|   |_) ',
-    '        \\_/   ',
-    '       _|_|_  ',
-    '      / | | \\  ',
-    '     /  | |  \\ ',
-    '    /___|_|___\\',
-    '    |  kitty  |',
-    '    |_________|',
-    '   /  /   \\  \\ ',
-    '  /__/     \\__\\',
-    '              ',
-    '  kitty terminal',
-    '   v0.36.4    ',
+    '⬜⬜⬜⬜⬜⬛⬛⬛⬛⬛⬜⬜⬜⬜⬜',
+    '⬜⬜⬜⬛⬛🟨🟨🟨🟨🟨⬛⬛⬜⬜⬜',
+    '⬜⬜⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛⬜⬜',
+    '⬜⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛⬜',
+    '⬜⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛⬜',
+    '⬛🟨🟨⬛⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛',
+    '⬛🟨🟨⬛⬛🟨🟨⬛⬛⬛🟨🟨🟨🟨⬛',
+    '⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛',
+    '⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛',
+    '⬛🟨🟨⬛🟨🟨🟨🟨🟨⬛🟨🟨🟨🟨⬛',
+    '⬜⬛🟨🟨⬛⬛⬛⬛⬛🟨🟨🟨🟨⬛⬜',
+    '⬜⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛⬜',
+    '⬜⬜⬛🟨🟨🟨🟨🟨🟨🟨🟨🟨⬛⬜⬜',
+    '⬜⬜⬜⬛⬛🟨🟨🟨🟨🟨⬛⬛⬜⬜⬜',
+    '⬜⬜⬜⬜⬜⬛⬛⬛⬛⬛⬜⬜⬜⬜⬜',
 ];
+
+// Label width for alignment (all labels padded to this length)
+const LABEL_WIDTH = 10;
+const padLabel = (label) => label.padEnd(LABEL_WIDTH);
 
 // System info section 1 — OS details
 const FASTFETCH_SECTION_1 = [
     { type: 'header' },
     { type: 'box-top' },
-    { label: 'Chassis', value: 'Notebook — MSI' },
-    { label: 'OS', value: 'Arch Linux x86_64' },
-    { label: 'Kernel', value: '6.12.74-1-lts' },
-    { label: 'Packages', value: '1847 (pacman), 10 (flatpak)' },
-    { label: 'Display', value: '1920x1080 @ 60Hz [Built-in]' },
-    { label: 'Shell', value: 'zsh 5.9 (oh-my-zsh)' },
-    { label: 'Terminal', value: 'kitty 0.36.4' },
-    { label: 'DE/WM', value: 'KDE Plasma / KWin (Wayland)' },
+    { label: padLabel('OS'), value: 'Arch Linux x86_64' },
+    { label: padLabel('Kernel'), value: '6.12.74-1-lts' },
+    { label: padLabel('Shell'), value: 'zsh 5.9 (oh-my-zsh)' },
+    { label: padLabel('Terminal'), value: 'kitty 0.36.4' },
+    { label: padLabel('DE/WM'), value: 'KDE Plasma / KWin (Wayland)' },
     { type: 'box-bottom' },
 ];
 
@@ -66,14 +63,10 @@ const getFastfetchSection2 = (uptimeMs) => {
     return [
         { type: 'user-header' },
         { type: 'box-top' },
-        { label: 'CPU', value: 'AMD Ryzen 5 4600H @ 3.00 GHz' },
-        { label: 'GPU', value: 'AMD Radeon RX 5300M' },
-        { label: 'GPU', value: 'AMD Radeon Vega Series' },
-        { label: 'GPU Driver', value: 'amdgpu' },
-        { label: 'Memory', value: `${memUsed} GiB / 22.87 GiB (${memPct}%)` },
-        { label: 'Swap', value: '0.0 GiB / 4.0 GiB' },
-        { label: 'OS Age', value: `${getOsAge()} days` },
-        { label: 'Uptime', value: formatUptime(uptimeMs) },
+        { label: padLabel('CPU'), value: 'AMD Ryzen 5 4600H @ 3.00 GHz' },
+        { label: padLabel('GPU'), value: 'AMD Radeon RX 5300M' },
+        { label: padLabel('Memory'), value: `${memUsed} GiB / 22.87 GiB (${memPct}%)` },
+        { label: padLabel('Uptime'), value: formatUptime(uptimeMs) },
         { type: 'box-bottom' },
         { type: 'color-dots' },
     ];
@@ -116,7 +109,7 @@ const Terminal = () => {
             const info = allInfoLines[i];
             rows.push(
                 <div key={i} className="ff-line">
-                    <span className="ff-art">{artLine.padEnd(40)}</span>
+                    <span className="ff-art">{artLine}</span>
                     <span className="ff-info">{info ? renderFfInfo(info) : null}</span>
                 </div>
             );

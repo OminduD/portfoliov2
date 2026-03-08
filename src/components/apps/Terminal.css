@@ -184,7 +184,8 @@
     color: #7b5cdf;
     font-weight: bold;
     white-space: pre;
-    min-width: 300px;
+    width: 320px;
+    flex-shrink: 0;
     text-shadow: 0 0 10px rgba(123, 92, 223, 0.35);
     font-size: 12.5px;
     letter-spacing: -0.2px;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Power, RefreshCw, Moon, ArrowUp } from 'lucide-react';
+import { Power, RefreshCw, Moon, Unlock, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import './Login.css';
@@ -12,61 +12,69 @@ const Login = ({ onLogin, wallpaper }) => {
         return () => clearInterval(timer);
     }, []);
 
-    // Click or key press — unlock directly
+    // NOTE: Removed full window click listener to make it feel more "interactive" with the specific button
+    // But kept keydown for convenience
     useEffect(() => {
-        const dismiss = () => onLogin();
-        window.addEventListener('click', dismiss);
-        window.addEventListener('keydown', dismiss);
-        return () => {
-            window.removeEventListener('click', dismiss);
-            window.removeEventListener('keydown', dismiss);
-        };
+        const handleKey = () => onLogin();
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
     }, [onLogin]);
 
     return (
         <div className="login-screen" style={{ backgroundImage: `url(${wallpaper})` }}>
             <div className="login-overlay" />
 
-            {/* ═══ Lock Screen ═══ */}
+            {/* Time */}
+            <motion.div
+                className="lock-time"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+            >
+                {format(time, 'HH:mm')}
+            </motion.div>
+            <motion.div
+                className="lock-date"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+            >
+                {format(time, 'EEEE, MMMM d')}
+            </motion.div>
+
+            {/* ═══ User Login Area ═══ */}
             <motion.div
                 className="lock-screen-content"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
             >
-                <div className="lock-time">{format(time, 'HH:mm')}</div>
-                <div className="lock-date">{format(time, 'EEEE, MMMM d')}</div>
-
-                <motion.div
-                    className="lock-hint"
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                    <ArrowUp size={20} />
-                    <span>Click or press any key to unlock</span>
-                </motion.div>
+                <div className="lock-avatar-container">
+                    <img src="/profile.jpg" alt="User" className="lock-avatar" />
+                </div>
+                <div className="lock-user-name">OminduD</div>
+                
+                <div className="lock-input-container" onClick={onLogin}>
+                    <div className="lock-password-display">
+                        <Unlock size={14} />
+                        <span>Click to Unlock</span>
+                        <ChevronRight size={14} style={{ marginLeft: 'auto', opacity: 0.5 }} />
+                    </div>
+                </div>
             </motion.div>
 
             {/* ── Bottom Bar ── */}
             <div className="sddm-bottom-bar">
-                <div className="sddm-bottom-left">
-                    <span className="sddm-hostname">linux</span>
-                </div>
-                <div className="sddm-bottom-right">
-                    <div className="sddm-clock-small">
-                        {format(time, 'HH:mm')}
-                    </div>
-                    <div className="sddm-controls">
-                        <button className="sddm-btn" title="Sleep">
-                            <Moon size={16} />
-                        </button>
-                        <button className="sddm-btn" title="Restart" onClick={() => window.location.reload()}>
-                            <RefreshCw size={16} />
-                        </button>
-                        <button className="sddm-btn" title="Shutdown">
-                            <Power size={16} />
-                        </button>
-                    </div>
+                <div className="sddm-controls">
+                    <button className="sddm-btn" title="Sleep">
+                        <Moon size={20} />
+                    </button>
+                    <button className="sddm-btn" title="Restart" onClick={() => window.location.reload()}>
+                        <RefreshCw size={20} />
+                    </button>
+                    <button className="sddm-btn" title="Shutdown">
+                        <Power size={20} />
+                    </button>
                 </div>
             </div>
         </div>

@@ -9,18 +9,18 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
     const inputRef = useRef(null);
 
     const apps = [
-        { id: 'terminal', name: 'Kitty', desc: 'Terminal Emulator', icon: <img className="launcher-app-icon" src="/kitty.svg" alt="Kitty" />, category: 'System', action: () => onLaunch('terminal'), favorite: true },
-        { id: 'projects', name: 'Projects', desc: 'View Repositories', icon: <img className="launcher-app-icon" src="/project.png" alt="Projects" />, category: 'Development', action: () => onLaunch('projects'), favorite: true },
-        { id: 'browser', name: 'Falkon', desc: 'Web Browser', icon: <img className="launcher-app-icon" src="/falcon.png" alt="Falkon" />, category: 'Internet', action: () => onLaunch('browser', { url: 'https://www.google.com/webhp?igu=1' }), favorite: true },
-        { id: 'email', name: 'Thunderbird', desc: 'Contact Me', icon: <img className="launcher-app-icon" src="/thunderbird.png" alt="Thunderbird" />, category: 'Internet', action: () => onLaunch('email'), favorite: true },
+        { id: 'terminal', name: 'Kitty', desc: 'Terminal Emulator', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}kitty.svg`} alt="Kitty" />, category: 'System', action: () => onLaunch('terminal'), favorite: true },
+        { id: 'projects', name: 'Projects', desc: 'View Repositories', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}project.png`} alt="Projects" />, category: 'Development', action: () => onLaunch('projects'), favorite: true },
+        { id: 'browser', name: 'Falkon', desc: 'Web Browser', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}falcon.png`} alt="Falkon" />, category: 'Internet', action: () => onLaunch('browser', { url: 'https://www.google.com/webhp?igu=1' }), favorite: true },
+        { id: 'email', name: 'Thunderbird', desc: 'Contact Me', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}thunderbird.png`} alt="Thunderbird" />, category: 'Internet', action: () => onLaunch('email'), favorite: true },
         { id: 'about', name: 'About Me', desc: 'Personal Info', icon: <User size={18} />, category: 'Information', action: () => onLaunch('about'), favorite: true },
         // Social Media
-        { id: 'github', name: 'GitHub', desc: 'OminduD', icon: <img className="launcher-app-icon" src="/github.png" alt="GitHub" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://github.com/OminduD' }), favorite: false },
-        { id: 'linkedin', name: 'LinkedIn', desc: 'Connect with me', icon: <img className="launcher-app-icon" src="/linkdin.webp" alt="LinkedIn" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://linkedin.com' }), favorite: false },
-        { id: 'x', name: 'X (Twitter)', desc: '@OminduD', icon: <img className="launcher-app-icon" src="/x.png" alt="X" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://x.com' }), favorite: false },
-        { id: 'reddit', name: 'Reddit', desc: 'u/OminduD', icon: <img className="launcher-app-icon" src="/reddit.webp" alt="Reddit" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://reddit.com' }), favorite: false },
-        { id: 'mastodon', name: 'Mastodon', desc: 'Fediverse', icon: <img className="launcher-app-icon" src="/mastodon.webp" alt="Mastodon" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://mastodon.social' }), favorite: false },
-        { id: 'linktree', name: 'Linktree', desc: 'All My Links', icon: <img className="launcher-app-icon" src="/linktree.png" alt="Linktree" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://linktr.ee' }), favorite: false },
+        { id: 'github', name: 'GitHub', desc: 'OminduD', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}github.png`} alt="GitHub" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://github.com/OminduD' }), favorite: false },
+        { id: 'linkedin', name: 'LinkedIn', desc: 'Connect with me', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}linkdin.webp`} alt="LinkedIn" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://linkedin.com' }), favorite: false },
+        { id: 'x', name: 'X (Twitter)', desc: '@OminduD', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}x.png`} alt="X" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://x.com' }), favorite: false },
+        { id: 'reddit', name: 'Reddit', desc: 'u/OminduD', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}reddit.webp`} alt="Reddit" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://reddit.com' }), favorite: false },
+        { id: 'mastodon', name: 'Mastodon', desc: 'Fediverse', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}mastodon.webp`} alt="Mastodon" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://mastodon.social' }), favorite: false },
+        { id: 'linktree', name: 'Linktree', desc: 'All My Links', icon: <img className="launcher-app-icon" src={`${import.meta.env.BASE_URL}linktree.png`} alt="Linktree" />, category: 'Social', action: () => onLaunch('browser', { url: 'https://linktr.ee' }), favorite: false },
         // System
         { id: 'files', name: 'Dolphin', desc: 'File Manager', icon: <FolderOpen size={18} />, category: 'System', action: () => onLaunch('browser', { url: 'internal://projects' }), favorite: false },
         { id: 'settings', name: 'System Settings', desc: 'Configure Desktop', icon: <Settings size={18} />, category: 'System', action: () => onLaunch('about'), favorite: false },
@@ -65,7 +65,7 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
                     {/* ── User Header ── */}
                     <div className="kickoff-user-header">
                         <div className="kickoff-user-avatar">
-                            <img src="/profile.jpg" alt="avatar" />
+                            <img src={`${import.meta.env.BASE_URL}profile.jpg`} alt="avatar" />
                         </div>
                         <div className="kickoff-user-info">
                             <span className="kickoff-user-name">OminduD</span>
@@ -102,22 +102,22 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
                     <div className="kickoff-content">
                         {/* Sidebar Tabs */}
                         <div className="kickoff-sidebar">
-                            <button 
+                            <button
                                 className={`kickoff-tab ${activeTab === 'favorites' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('favorites')}
                             >
                                 Favorites
                             </button>
-                            <button 
+                            <button
                                 className={`kickoff-tab ${activeTab === 'all' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('all')}
                             >
                                 All Applications
                             </button>
-                           
-                            <div style={{height: 12}}></div>
-                            <div style={{paddingLeft: 16, fontSize: 10, color: 'var(--text-sub)', textTransform: 'uppercase', marginBottom: 4}}>Categories</div>
-                            
+
+                            <div style={{ height: 12 }}></div>
+                            <div style={{ paddingLeft: 16, fontSize: 10, color: 'var(--text-sub)', textTransform: 'uppercase', marginBottom: 4 }}>Categories</div>
+
                             {categories.filter(c => c !== 'favorites' && c !== 'all').map(cat => (
                                 <button
                                     key={cat}
@@ -131,7 +131,7 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
 
                         {/* Apps Grid */}
                         <motion.div className="kickoff-apps-area">
-                             {filteredApps.map((app, i) => (
+                            {filteredApps.map((app, i) => (
                                 <motion.div
                                     key={app.id}
                                     className="kickoff-app-item"
@@ -148,13 +148,13 @@ const Launcher = ({ isOpen, onClose, onLaunch, onPower }) => {
                                         <span className="kickoff-app-desc">{app.desc}</span>
                                     </div>
                                 </motion.div>
-                             ))}
+                            ))}
                         </motion.div>
                     </div>
 
                     {/* ── Footer ── */}
                     <div className="kickoff-footer">
-                         {powerActions.map(action => (
+                        {powerActions.map(action => (
                             <button
                                 key={action.id}
                                 className="kickoff-power-btn"

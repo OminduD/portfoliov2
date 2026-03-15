@@ -16,16 +16,16 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
     // Map appId to icons
     const getAppIcon = (appId) => {
         const icons = {
-            terminal: '/kitty.svg',
-            projects: '/project.png',
-            browser: '/falcon.png',
-            email: '/thunderbird.png',
-            about: '/kde.png',
-            files: '/folder.png', // Fallback or add
-            settings: '/settings.png'
+            terminal: `${import.meta.env.BASE_URL}kitty.svg`,
+            projects: `${import.meta.env.BASE_URL}project.png`,
+            browser: `${import.meta.env.BASE_URL}falcon.png`,
+            email: `${import.meta.env.BASE_URL}thunderbird.png`,
+            about: `${import.meta.env.BASE_URL}kde.png`,
+            files: `${import.meta.env.BASE_URL}folder.png`,
+            settings: `${import.meta.env.BASE_URL}settings.png`
         };
         // Simple fallback logic if needed
-        return icons[appId] || '/kde.png';
+        return icons[appId] || `${import.meta.env.BASE_URL}kde.png`;
     };
 
     useEffect(() => {
@@ -116,11 +116,11 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
                 <span>{volume}%</span>
             </div>
             <div className="audio-slider-container">
-                <input 
-                    type="range" 
-                    min="0" 
-                    max="100" 
-                    value={volume} 
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={volume}
                     onChange={(e) => setVolume(e.target.value)}
                     className="audio-slider"
                 />
@@ -133,21 +133,21 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
             {/* Left Section: Launcher, Quick Launch, Tasks */}
             <div className="panel-left">
                 <button className="kickoff-btn" onClick={onOpenLauncher} title="Application Launcher">
-                   <img className="kickoff-icon-img" src="/logo.png" alt="Menu" />
+                    <img className="kickoff-icon-img" src={`${import.meta.env.BASE_URL}logo.png`} alt="Menu" />
                 </button>
 
                 <div className="panel-sep" />
 
                 <div className="quick-launch">
                     <button className="quick-launch-btn" onClick={() => onOpenApp && onOpenApp('terminal')} title="Terminal">
-                        <img src="/kitty.svg" alt="Kitty" />
+                        <img src={`${import.meta.env.BASE_URL}kitty.svg`} alt="Kitty" />
                     </button>
                     <button className="quick-launch-btn" onClick={() => onOpenApp && onOpenApp('browser')} title="Browser">
-                        <img src="/falcon.png" alt="Browser" />
+                        <img src={`${import.meta.env.BASE_URL}falcon.png`} alt="Browser" />
                     </button>
                     <button className="quick-launch-btn" onClick={() => onOpenApp && onOpenApp('files')} title="Files">
-                         <img src="/folder.png" alt="Files" style={{ filter: 'invert(1)' }} />
-                         {/* Note: folder.png might need style adjustment if it's black */}
+                        <img src={`${import.meta.env.BASE_URL}folder.png`} alt="Files" style={{ filter: 'invert(1)' }} />
+                        {/* Note: folder.png might need style adjustment if it's black */}
                     </button>
                 </div>
 
@@ -155,19 +155,19 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
 
                 <div className="task-manager">
                     {windows.filter(w => w.isOpen).map(win => (
-                         <div 
+                        <div
                             key={win.id}
                             className={`task-item ${!win.isMinimized && win.isOpen ? 'active' : ''} ${win.isMinimized ? 'minimized' : ''}`}
                             onClick={() => onWindowClick && onWindowClick(win.id)}
                             title={win.title}
-                         >
+                        >
                             {getAppIcon(win.appId) ? (
                                 <img src={getAppIcon(win.appId)} alt="icon" className="task-icon" />
                             ) : (
                                 <div className="task-icon-fallback">{win.title.charAt(0)}</div>
                             )}
                             <span className="task-title">{win.title}</span>
-                         </div>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -175,22 +175,22 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
             {/* Right Section: Tray, Clock, Power, Desktop */}
             <div className="panel-right" ref={popupRef}>
                 <div className="tray-box">
-                    <button 
-                        className={`tray-item ${activePopup === 'sysmonitor' ? 'active' : ''}`} 
+                    <button
+                        className={`tray-item ${activePopup === 'sysmonitor' ? 'active' : ''}`}
                         onClick={() => togglePopup('sysmonitor')}
                         title="System Monitor"
                     >
                         <Cpu size={15} />
                     </button>
-                    <button 
-                         className="tray-item"
-                         onClick={() => togglePopup('network')}
-                         title="Network: Connected"
+                    <button
+                        className="tray-item"
+                        onClick={() => togglePopup('network')}
+                        title="Network: Connected"
                     >
                         <Wifi size={15} />
                     </button>
-                    <button 
-                        className={`tray-item ${activePopup === 'audio' ? 'active' : ''}`} 
+                    <button
+                        className={`tray-item ${activePopup === 'audio' ? 'active' : ''}`}
                         onClick={() => togglePopup('audio')}
                         title="Volume"
                     >
@@ -200,8 +200,8 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
 
                 <div className="panel-sep" />
 
-                <div 
-                    className="clock-widget" 
+                <div
+                    className="clock-widget"
                     onClick={() => togglePopup('calendar')}
                 >
                     <div className="clock-time">{format(time, 'HH:mm')}</div>
@@ -213,7 +213,7 @@ const Waybar = ({ onOpenLauncher, onPower, windows = [], onWindowClick, onOpenAp
                 <button className="show-desktop-btn" onClick={onPower} title="Power Menu">
                     <Power size={18} />
                 </button>
-                
+
                 <button className="show-desktop-btn" onClick={onShowDesktop} title="Show Desktop">
                     <Layout size={18} />
                 </button>

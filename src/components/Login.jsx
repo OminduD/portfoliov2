@@ -50,10 +50,10 @@ const Login = ({ onLogin, wallpaper }) => {
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
                 <div className="lock-avatar-container">
-                    <img src="/profile.jpg" alt="User" className="lock-avatar" />
+                    <img src={`${import.meta.env.BASE_URL}profile.jpg`} alt="User" className="lock-avatar" />
                 </div>
                 <div className="lock-user-name">OminduD</div>
-                
+
                 <div className="lock-input-container" onClick={onLogin}>
                     <div className="lock-password-display">
                         <Unlock size={14} />

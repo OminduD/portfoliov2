@@ -208,19 +208,19 @@ const Desktop = () => {
             {/* Desktop Icons — top-left like KDE Plasma */}
             <div className="desktop-icons">
                 <div className="desktop-icon" onClick={() => openApp('terminal')}>
-                    <img className="desktop-icon-img" src="/kitty.svg" alt="Kitty" draggable={false} />
+                    <img className="desktop-icon-img" src={`${import.meta.env.BASE_URL}kitty.svg`} alt="Kitty" draggable={false} />
                     <span>Kitty</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'internal://projects' })}>
-                    <img className="desktop-icon-img" src="/project.png" alt="Projects" draggable={false} />
+                    <img className="desktop-icon-img" src={`${import.meta.env.BASE_URL}project.png`} alt="Projects" draggable={false} />
                     <span>Projects</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('browser', { url: 'https://google.com' })}>
-                    <img className="desktop-icon-img" src="/falcon.png" alt="Falkon" draggable={false} />
+                    <img className="desktop-icon-img" src={`${import.meta.env.BASE_URL}falcon.png`} alt="Falkon" draggable={false} />
                     <span>Falkon</span>
                 </div>
                 <div className="desktop-icon" onClick={() => openApp('email')}>
-                    <img className="desktop-icon-img" src="/thunderbird.png" alt="Thunderbird" draggable={false} />
+                    <img className="desktop-icon-img" src={`${import.meta.env.BASE_URL}thunderbird.png`} alt="Thunderbird" draggable={false} />
                     <span>Thunderbird</span>
                 </div>
             </div>
@@ -255,11 +255,11 @@ const Desktop = () => {
                         transition={{ duration: 0.12 }}
                     >
                         <div className="ctx-item" onClick={() => openApp('terminal')}>
-                            <img className="ctx-icon-img" src="/kitty.svg" alt="" />
+                            <img className="ctx-icon-img" src={`${import.meta.env.BASE_URL}kitty.svg`} alt="" />
                             <span>Open Kitty</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('browser', { url: 'https://google.com' })}>
-                            <img className="ctx-icon-img" src="/falcon.png" alt="" />
+                            <img className="ctx-icon-img" src={`${import.meta.env.BASE_URL}falcon.png`} alt="" />
                             <span>Open Falkon</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('browser', { url: 'internal://projects' })}>
@@ -267,7 +267,7 @@ const Desktop = () => {
                             <span>Open Projects</span>
                         </div>
                         <div className="ctx-item" onClick={() => openApp('email')}>
-                            <img className="ctx-icon-img" src="/thunderbird.png" alt="" />
+                            <img className="ctx-icon-img" src={`${import.meta.env.BASE_URL}thunderbird.png`} alt="" />
                             <span>Open Thunderbird</span>
                         </div>
                         <div className="ctx-divider" />

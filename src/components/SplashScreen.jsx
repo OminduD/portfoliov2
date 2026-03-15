@@ -19,7 +19,7 @@ const SplashScreen = ({ onFinish }) => {
         >
             <img
                 className="splash-logo"
-                src="/splash.gif"
+                src={`${import.meta.env.BASE_URL}splash.gif`}
                 alt="Boot Splash"
                 draggable={false}
             />

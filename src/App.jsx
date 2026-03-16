@@ -1,8 +1,11 @@
 import Desktop from './components/Desktop';
+import { ThemeProvider } from './components/ThemeContext';
 
 function App() {
   return (
-    <Desktop />
+    <ThemeProvider>
+      <Desktop />
+    </ThemeProvider>
   );
 }
 

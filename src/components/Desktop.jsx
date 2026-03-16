@@ -5,6 +5,7 @@ import Terminal from './apps/Terminal';
 import Projects from './apps/Projects';
 import Browser from './apps/Browser';
 import Email from './apps/Email';
+import SettingsApp from './apps/Settings';
 import Login from './Login';
 import Launcher from './Launcher';
 import PowerMenu from './PowerMenu';
@@ -134,6 +135,10 @@ const Desktop = () => {
             case 'email':
                 component = <Email />;
                 title = 'Thunderbird — Contact Me';
+                break;
+            case 'settings':
+                component = <SettingsApp />;
+                title = 'System Settings';
                 break;
             default:
                 return;
@@ -280,7 +285,7 @@ const Desktop = () => {
                             <span>System Info</span>
                         </div>
                         <div className="ctx-divider" />
-                        <div className="ctx-item ctx-item-muted">
+                        <div className="ctx-item" onClick={() => openApp('settings')}>
                             <Settings size={14} />
                             <span>Configure Desktop…</span>
                         </div>

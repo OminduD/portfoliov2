@@ -29,6 +29,22 @@
   --font-sans: 'Noto Sans', system-ui, sans-serif;
 }
 
+:root[data-theme="light"] {
+  /* KDE Breeze Light Palette */
+  --bg-base: #fcfcfc;
+  --bg-mantle: #eff0f1;
+  --bg-crust: #e3e5e7;
+
+  --text-main: #232629;
+  --text-sub: #31363b;
+
+  --surface-0: #fcfcfc;
+  --surface-1: #eff0f1;
+  --surface-2: #dae0e5;
+
+  --overlay-0: #8e9295;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
